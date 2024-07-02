@@ -36,6 +36,9 @@ jobs:
 
         - name: 🏭 Build packages
           run: npm run prebuild
+        
+        - name: 🚦 Validate Typescript
+          run: npx tsc
 
         - name: 🚦 Lint and fix
           run: npm run lint
