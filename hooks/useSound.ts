@@ -11,7 +11,7 @@ export const useSound = () => {
   );
 
   useEffect(() => {
-    soundRef.current.stopAndUnload();
+    return soundRef.current.stopAndUnload;
   }, []);
 
   return { isSoundLoaded, Sound: soundRef.current };
