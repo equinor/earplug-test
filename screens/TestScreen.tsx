@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   EDSStyleSheet,
   LinearProgress,
   Typography,
@@ -8,6 +9,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ExitButton } from "../components/ExitButton/ExitButton";
 import { useTestPlan } from "../contexts/TestPlanContext";
+import { useSound } from "../hooks/useSound";
 
 export const TestScreen = () => {
   const styles = useStyles(themeStyles);
@@ -16,6 +18,8 @@ export const TestScreen = () => {
     navigateNext,
     progress,
   } = useTestPlan();
+  const { isSoundLoaded, Sound } = useSound();
+
   return (
     <SafeAreaView style={styles.container}>
       <LinearProgress value={progress} />
@@ -25,7 +29,18 @@ export const TestScreen = () => {
       </Typography>
       <Typography>Progress {progress}</Typography>
       {Component}
-      <Button title="Neste side" onPress={navigateNext} />
+      {isSoundLoaded ? (
+        <Button title="Spill av testlyd" onPress={Sound.playInLoop} />
+      ) : (
+        <CircularProgress />
+      )}
+      <Button
+        title="Neste side"
+        onPress={() => {
+          Sound.stop();
+          navigateNext();
+        }}
+      />
     </SafeAreaView>
   );
 };
