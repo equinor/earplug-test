@@ -49,6 +49,8 @@ export const WelcomeScreen = () => {
           variant="outlined"
           iconName="link"
           title={dictionary["welcomeScreen.earPlugInstructionsButton"]}
+          /*TODO link to the URL given by the stakeholders*/
+          onPress={() => console.error("Not implemented yet!")}
         />
       </View>
     </SafeAreaView>
