@@ -6,7 +6,8 @@ import { getEDSDensity } from "./utils/getEDSDensity";
 
 export default function App() {
   const colorScheme = useColorScheme();
-  useEDS();
+  const [hasLoadedEDS] = useEDS();
+  if (!hasLoadedEDS) return null;
   return (
     <SafeAreaProvider>
       <EDSProvider colorScheme={colorScheme} density={getEDSDensity()}>
