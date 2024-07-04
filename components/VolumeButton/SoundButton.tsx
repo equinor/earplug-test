@@ -25,7 +25,7 @@ const SoundButtonInner = (
 ) => {
   const [buttonType, setButtonType] = useState<SoundButtonType>("play");
   const [isPressed, setIsPressed] = useState(false);
-  useSoundButtonHandle(ref, buttonType, setButtonType);
+  useSoundButtonHandle(ref, buttonType, setButtonType, setIsPressed);
 
   const onPressIn = () => {
     haptics();
