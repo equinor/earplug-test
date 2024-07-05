@@ -3,7 +3,10 @@ name: Build and release to Test 🧪
 on:
     push:
         branches:
-            - SWTest
+            - main
+    pull_request:
+        types: [opened, reopened, synchronize]
+        
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -12,6 +15,6 @@ jobs:
         if:
             ${{ !startsWith(github.event.head_commit.message, 'docs')  && !startsWith(github.event.head_commit.message, 'style') && !startswith(github.event.head_commit.message, 'refactor') }}
         secrets: inherit
-        uses: equinor/attenuation-app/.github/workflows/build-release-ios.yml@SWTest
+        uses: equinor/attenuation-app/.github/workflows/build-release-ios.yml@main
         with:
             environment: Prod
