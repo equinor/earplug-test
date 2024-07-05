@@ -18,9 +18,7 @@ import { useRef, useState } from "react";
 import { SoundButtonControls } from "../components/VolumeButton/types";
 import { Image, ScrollView, View } from "react-native";
 import soundIndicator from "../assets/sound-indicator.png";
-
-const adjustVolumePageTitle =
-  "Juster lydvolumet sakte til du akkurat kan høre tonen";
+import { useDictionary } from "../language";
 
 export const TestScreen = () => {
   const styles = useStyles(themeStyles);
@@ -32,6 +30,7 @@ export const TestScreen = () => {
   const { isSoundLoaded, Sound } = useSound();
   const soundButtonRef = useRef<SoundButtonControls>(null);
   const [isVolumePage, setIsVolumePage] = useState(false);
+  const dictionary = useDictionary();
 
   const onPress: SoundButtonProps["onPress"] = (e) => {
     if (e.type === "play") {
@@ -49,8 +48,7 @@ export const TestScreen = () => {
     if (type === TEST_PLAN_PAGE_TYPES.TEST && !isVolumePage) {
       return (
         <Typography style={styles.description}>
-          Sett headesettet på og klikk &apos;spill av&apos; for å starte
-          lydtesten
+          {dictionary["testScreen.testDescription"]}
         </Typography>
       );
     }
@@ -60,7 +58,7 @@ export const TestScreen = () => {
     if (type === TEST_PLAN_PAGE_TYPES.TEST && isVolumePage) {
       return (
         <Button
-          title="Bekreft volum"
+          title={dictionary["testScreen.button.confirmVolume"]}
           onPress={() => {
             soundButtonRef.current?.setSoundButtonType("play");
             setIsVolumePage(false);
@@ -70,41 +68,52 @@ export const TestScreen = () => {
         />
       );
     } else if (type === TEST_PLAN_PAGE_TYPES.TEST_WITH_PLUGS_INFO) {
-      return <Button title="Fortsett" onPress={navigateNext} />;
+      return (
+        <Button
+          title={dictionary["testScreen.button.continue"]}
+          onPress={navigateNext}
+        />
+      );
     }
     return <Button title="" style={{ opacity: 0 }} />;
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.topSection}>
-          <View style={styles.topContentContainer}>
-            <LinearProgress value={progress} />
-            <ExitButton style={styles.exitButton} />
-            <Typography variant="h2" color="primary" style={styles.title}>
-              {isVolumePage ? adjustVolumePageTitle : title}
-            </Typography>
-          </View>
-          <View style={styles.middleContentContainer}>
-            {type === TEST_PLAN_PAGE_TYPES.TEST && isSoundLoaded ? (
-              <>
-                <TestDescription />
-                <SoundButton ref={soundButtonRef} onPress={onPress} />
-              </>
-            ) : type === TEST_PLAN_PAGE_TYPES.TEST && !isSoundLoaded ? (
-              <CircularProgress />
-            ) : (
-              <Typography style={{ textAlign: "center" }}>
-                Placeholder for test with plugs info
+      {type === TEST_PLAN_PAGE_TYPES.NOT_FOUND ? (
+        <Typography>{title}</Typography>
+      ) : (
+        <ScrollView contentContainerStyle={styles.container}>
+          <View style={styles.topSection}>
+            <View style={styles.topContentContainer}>
+              <LinearProgress value={progress} />
+              <ExitButton style={styles.exitButton} />
+              <Typography variant="h2" color="primary" style={styles.title}>
+                {isVolumePage
+                  ? dictionary["testScreen.title.adjustVolume"]
+                  : title}
               </Typography>
-            )}
+            </View>
+            <View style={styles.middleContentContainer}>
+              {type === TEST_PLAN_PAGE_TYPES.TEST && isSoundLoaded ? (
+                <>
+                  <TestDescription />
+                  <SoundButton ref={soundButtonRef} onPress={onPress} />
+                </>
+              ) : type === TEST_PLAN_PAGE_TYPES.TEST && !isSoundLoaded ? (
+                <CircularProgress />
+              ) : (
+                <Typography style={{ textAlign: "center" }}>
+                  Placeholder for test with plugs info
+                </Typography>
+              )}
+            </View>
           </View>
-        </View>
-        <View style={styles.bottomSection}>
-          <BottomButton />
-        </View>
-      </ScrollView>
+          <View style={styles.bottomSection}>
+            <BottomButton />
+          </View>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };

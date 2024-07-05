@@ -6,12 +6,14 @@ import {
   useContext,
   useState,
 } from "react";
-import { Ear, ObjectValues } from "../types";
+import { ObjectValues } from "../types";
 import { useAttenuationAppNavigation } from "../navigation/useAttenuationAppNavigation";
+import { useDictionary } from "../language";
 
 export const TEST_PLAN_PAGE_TYPES = {
   TEST: "test",
   TEST_WITH_PLUGS_INFO: "testWithPlugsInfo",
+  NOT_FOUND: "notFound",
 } as const;
 
 type TestPlanPageType = ObjectValues<typeof TEST_PLAN_PAGE_TYPES>;
@@ -28,33 +30,32 @@ type TestPlanContextType = {
   setTestPlan: Dispatch<SetStateAction<TestPlanPage[]>>;
 };
 
-const getPlaySoundPageTitle = (ear: Ear, withPlug: boolean) => {
-  const withOrWithout = withPlug ? "med" : "uten";
-  const earName = ear === "left" ? "venstre" : "høyre";
-  return `Lydtest ${earName} øre ${withOrWithout} propper`;
-};
+const useTestPlanPages = () => {
+  const dictionary = useDictionary();
+  const TEST_PLAN_PAGES: Record<string, TestPlanPage> = {
+    WITHOUT_PLUG_LEFT_EAR: {
+      title: dictionary["testScreen.title.withoutPlug.leftEar"],
+      type: TEST_PLAN_PAGE_TYPES.TEST,
+    },
+    WITHOUT_PLUG_RIGHT_EAR: {
+      title: dictionary["testScreen.title.withoutPlug.rightEar"],
+      type: TEST_PLAN_PAGE_TYPES.TEST,
+    },
+    TEST_WITH_PLUGS_INFO: {
+      title: dictionary["testScreen.title.testWithPlugsInfo"],
+      type: TEST_PLAN_PAGE_TYPES.TEST_WITH_PLUGS_INFO,
+    },
+    WITH_PLUG_LEFT_EAR: {
+      title: dictionary["testScreen.title.withPlug.leftEar"],
+      type: TEST_PLAN_PAGE_TYPES.TEST,
+    },
+    WITH_PLUG_RIGHT_EAR: {
+      title: dictionary["testScreen.title.withPlug.rightEar"],
+      type: TEST_PLAN_PAGE_TYPES.TEST,
+    },
+  };
 
-const TEST_PLAN_PAGES: Record<string, TestPlanPage> = {
-  WITHOUT_PLUG_LEFT_EAR: {
-    title: getPlaySoundPageTitle("left", false),
-    type: TEST_PLAN_PAGE_TYPES.TEST,
-  },
-  WITHOUT_PLUG_RIGHT_EAR: {
-    title: getPlaySoundPageTitle("right", false),
-    type: TEST_PLAN_PAGE_TYPES.TEST,
-  },
-  TEST_WITH_PLUGS_INFO: {
-    title: "Lydtest med propper",
-    type: TEST_PLAN_PAGE_TYPES.TEST_WITH_PLUGS_INFO,
-  },
-  WITH_PLUG_LEFT_EAR: {
-    title: getPlaySoundPageTitle("left", true),
-    type: TEST_PLAN_PAGE_TYPES.TEST,
-  },
-  WITH_PLUG_RIGHT_EAR: {
-    title: getPlaySoundPageTitle("right", true),
-    type: TEST_PLAN_PAGE_TYPES.TEST,
-  },
+  return { TEST_PLAN_PAGES };
 };
 
 const noProviderErrorFn = () => {
@@ -62,7 +63,10 @@ const noProviderErrorFn = () => {
 };
 
 const TestPlanContext = createContext<TestPlanContextType>({
-  current: TEST_PLAN_PAGES.WITHOUT_PLUG_LEFT_EAR,
+  current: {
+    title: "You need to use this inside of a TestPlanProvider",
+    type: TEST_PLAN_PAGE_TYPES.NOT_FOUND,
+  },
   progress: 0,
   navigateNext: noProviderErrorFn,
   setTestPlan: noProviderErrorFn,
@@ -73,6 +77,7 @@ type TestPlanProviderProps = {
 };
 
 export const TestPlanProvider = ({ children }: TestPlanProviderProps) => {
+  const { TEST_PLAN_PAGES } = useTestPlanPages();
   const [testPlan, setTestPlan] = useState<TestPlanPage[]>([
     TEST_PLAN_PAGES.WITHOUT_PLUG_LEFT_EAR,
     TEST_PLAN_PAGES.WITHOUT_PLUG_RIGHT_EAR,

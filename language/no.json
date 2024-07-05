@@ -1,7 +1,16 @@
 {
-    "helloWorld": "Hallo, verden!",
-    "exitDialog.title": "Er du sikker på at du vil avslutte testen?",
-    "exitDialog.description": "Hvis du avslutter testen, mister du all progresjon",
-    "exitDialog.confirm": "Avslutt test",
-    "exitDialog.cancel": "Jeg ombestemte meg"
+  "helloWorld": "Hallo, verden!",
+  "exitDialog.title": "Er du sikker på at du vil avslutte testen?",
+  "exitDialog.description": "Hvis du avslutter testen, mister du all progresjon",
+  "exitDialog.confirm": "Avslutt test",
+  "exitDialog.cancel": "Jeg ombestemte meg",
+  "testScreen.title.withoutPlug.leftEar": "Lydtest venstre øre uten propper",
+  "testScreen.title.withoutPlug.rightEar": "Lydtest høyre øre uten propper",
+  "testScreen.title.testWithPlugsInfo": "Lydtest med propper",
+  "testScreen.title.withPlug.leftEar": "Lydtest venstre øre med propper",
+  "testScreen.title.withPlug.rightEar": "Lydtest høyre øre med propper",
+  "testScreen.title.adjustVolume": "Juster lydvolumet sakte til du akkurat kan høre tonen",
+  "testScreen.testDescription": "Sett headesettet på og klikk 'spill av' for å starte lydtesten",
+  "testScreen.button.confirmVolume": "Bekreft volum",
+  "testScreen.button.continue": "Fortsett"
 }
