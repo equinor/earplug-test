@@ -6,6 +6,7 @@ export const useSoundButtonHandle = (
   ref: SoundButtonRef,
   soundButtonType: SoundButtonType,
   setSoundButtonType: Dispatch<SetStateAction<SoundButtonType>>,
+  setIsPressed: Dispatch<SetStateAction<boolean>>,
 ) => {
   return useImperativeHandle(
     ref,
@@ -17,6 +18,7 @@ export const useSoundButtonHandle = (
           duration: 150,
         });
         setSoundButtonType(type);
+        setIsPressed(false);
       },
     }),
     [soundButtonType, setSoundButtonType],
