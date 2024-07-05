@@ -22,7 +22,7 @@ export const CarouselPage = ({
         disabled={isFirstPage}
         onPress={() => onPress("left")}
       />
-      <View style={{ flex: 1, gap: 16 }}>{children}</View>
+      <View style={styles.contentContainer}>{children}</View>
       <Button.Icon
         variant="ghost"
         name="chevron-right"
@@ -41,4 +41,5 @@ const carouselPageStyles = EDSStyleSheet.create(() => ({
     height: "100%",
     gap: 8,
   },
+  contentContainer: { flex: 1, gap: 16 },
 }));
