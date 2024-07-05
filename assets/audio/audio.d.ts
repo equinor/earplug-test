@@ -1,5 +1,5 @@
 declare module "*.wav" {
-  import { AVPlaybackSource } from "expo-av";
-  const value: AVPlaybackSource;
+  import Sound from "react-native-sound";
+  const value: Sound;
   export default value;
 }

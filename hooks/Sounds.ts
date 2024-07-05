@@ -1,50 +1,82 @@
-import { Audio } from "expo-av";
-import { Sound } from "expo-av/build/Audio";
+import Sound from "react-native-sound";
 import testSound from "../assets/audio/500Hz_Dobbelpip.wav";
 
 export class Sounds {
-  private sound: Sound | null;
+  private sound: Sound;
   private intervalId: NodeJS.Timeout | null;
   private onSoundCreateAndLoad: () => void;
-  private onSoundStopAndUnload: () => void;
+  private onSoundStopAndRelease: () => void;
 
   constructor(
     onSoundCreateAndLoad: () => void,
-    onSoundStopAndUnload: () => void,
+    onSoundStopAndRelease: () => void,
   ) {
-    this.sound = null;
+    this.sound = new Sound(testSound, this.onSoundsLoaded);
     this.intervalId = null;
     this.onSoundCreateAndLoad = onSoundCreateAndLoad;
-    this.onSoundStopAndUnload = onSoundStopAndUnload;
-    void this.createAndLoad();
+    this.onSoundStopAndRelease = onSoundStopAndRelease;
   }
 
-  private createAndLoad = () => {
-    void Audio.Sound.createAsync(testSound).then(({ sound }) => {
-      this.sound = sound;
+  private onSoundsLoaded = (error: unknown) => {
+    if (error) {
+      console.error("failed to load the sound", error);
+      return;
+    }
+
+    const isSoundsLoaded = this.getIsSoundsLoaded(this.getSounds());
+    if (isSoundsLoaded) {
+      this.initializeSoundPlayback();
       this.onSoundCreateAndLoad();
+    }
+  };
+
+  private getSounds = () => {
+    return [this.sound];
+  };
+
+  private getIsSoundsLoaded = (sounds: Sound[]) => {
+    let isSoundsLoaded = true;
+    sounds.forEach((sound) => {
+      if (!sound.isLoaded()) {
+        isSoundsLoaded = false;
+      }
     });
+    return isSoundsLoaded;
   };
 
   public playInLoop = () => {
     this.intervalId = setInterval(() => {
-      void this.sound?.replayAsync();
+      this.sound.play();
     }, 1500);
   };
 
   public stop = () => {
-    void this.sound?.stopAsync().then(() => {
-      if (this.intervalId) {
-        clearInterval(this.intervalId);
-        this.intervalId = null;
-      }
+    this.getSounds().forEach((sound) => {
+      sound.stop(() => {
+        if (this.intervalId) {
+          clearInterval(this.intervalId);
+          this.intervalId = null;
+        }
+      });
     });
   };
 
-  public stopAndUnload = () => {
-    this.stop();
-    void this.sound?.unloadAsync().then(() => {
-      this.onSoundStopAndUnload();
+  private releaseSounds = () => {
+    this.getSounds().forEach((sound) => {
+      sound.release();
     });
+    Sound.setActive(false);
+  };
+
+  public stopAndRelease = () => {
+    this.stop();
+    this.releaseSounds();
+    this.onSoundStopAndRelease();
+  };
+
+  private initializeSoundPlayback = () => {
+    Sound.setCategory("Playback");
+    Sound.setMode("Measurement");
+    Sound.setActive(true);
   };
 }
