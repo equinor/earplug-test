@@ -4,15 +4,18 @@ import { ComponentProps } from "react";
 export type CarouselTextProps = Pick<
   ComponentProps<typeof Typography>,
   "children"
->;
-export const CarouselText = ({ children }: CarouselTextProps) => {
+> & { pageNumber: number };
+export const CarouselText = ({ children, pageNumber }: CarouselTextProps) => {
   return (
     <Typography
       group="paragraph"
       variant="body_short"
       style={{ alignSelf: "center", textAlign: "center" }}
     >
-      {children}
+      <>
+        {`${pageNumber}. `}
+        {children}
+      </>
     </Typography>
   );
 };
