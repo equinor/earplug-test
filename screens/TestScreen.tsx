@@ -40,10 +40,10 @@ export const TestScreen = () => {
   const { setResult } = useResults();
 
   const onPress: SoundButtonProps["onPress"] = (e) => {
-    if (e.type === "play") {
+    if (e.type === "play" && ear) {
       soundButtonRef.current?.setSoundButtonType("volume");
       setIsVolumePage(true);
-      Sound.playInLoop();
+      Sound.playInLoop(ear);
     }
 
     if (e.type === "volume" && e.variant === "+") {
