@@ -19,11 +19,15 @@ import { SoundButtonControls } from "../components/VolumeButton/types";
 import { Image, ScrollView, View } from "react-native";
 import soundIndicator from "../assets/sound-indicator.png";
 import { useDictionary } from "../language";
+import { useSystemVolume } from "../hooks/useSystemVolume";
+import { useResults } from "../contexts/ResultsContext";
+import { setSystemVolume } from "../utils/volume/setSystemVolume";
+import { SYSTEM_VOLUME } from "../constants/sounds";
 
 export const TestScreen = () => {
   const styles = useStyles(themeStyles);
   const {
-    current: { title, type },
+    current: { title, type, ear, withPlug },
     navigateNext,
     progress,
   } = useTestPlan();
@@ -31,12 +35,23 @@ export const TestScreen = () => {
   const soundButtonRef = useRef<SoundButtonControls>(null);
   const [isVolumePage, setIsVolumePage] = useState(false);
   const dictionary = useDictionary();
+  const { decreaseSystemVolume, increaseSystemVolume, systemVolume } =
+    useSystemVolume();
+  const { setResult } = useResults();
 
   const onPress: SoundButtonProps["onPress"] = (e) => {
     if (e.type === "play") {
       soundButtonRef.current?.setSoundButtonType("volume");
       setIsVolumePage(true);
       Sound.playInLoop();
+    }
+
+    if (e.type === "volume" && e.variant === "+") {
+      increaseSystemVolume();
+    }
+
+    if (e.type === "volume" && e.variant === "-") {
+      decreaseSystemVolume();
     }
   };
 
@@ -60,10 +75,18 @@ export const TestScreen = () => {
         <Button
           title={dictionary["testScreen.button.confirmVolume"]}
           onPress={() => {
-            soundButtonRef.current?.setSoundButtonType("play");
-            setIsVolumePage(false);
-            Sound.stop();
-            navigateNext();
+            if (ear && typeof withPlug === "boolean") {
+              soundButtonRef.current?.setSoundButtonType("play");
+              setIsVolumePage(false);
+              Sound.stop();
+              setResult(
+                ear,
+                withPlug ? "withPlugs" : "withoutPlugs",
+                systemVolume,
+              );
+              setSystemVolume(SYSTEM_VOLUME);
+              navigateNext();
+            }
           }}
         />
       );
@@ -95,6 +118,7 @@ export const TestScreen = () => {
               </Typography>
             </View>
             <View style={styles.middleContentContainer}>
+              <Typography>{systemVolume}</Typography>
               {type === TEST_PLAN_PAGE_TYPES.TEST && isSoundLoaded ? (
                 <>
                   <TestDescription />

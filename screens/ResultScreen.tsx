@@ -1,18 +1,10 @@
 import { EDSStyleSheet, Typography, useStyles } from "@equinor/mad-components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useResults } from "../contexts/ResultsContext";
-import { useEffect } from "react";
 
 export const ResultScreen = () => {
   const styles = useStyles(themeStyles);
-  const { results, setResult } = useResults();
-  useEffect(() => {
-    setResult("left", "withPlugs", 20);
-    setResult("left", "withoutPlugs", 40);
-    setResult("right", "withPlugs", 60);
-    setResult("right", "withoutPlugs", 80);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run once
-  }, []);
+  const { results } = useResults();
   return (
     <SafeAreaView style={styles.container}>
       <Typography>Resultater</Typography>

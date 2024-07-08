@@ -1,12 +1,12 @@
 import {
   Dispatch,
-  ReactNode,
+  PropsWithChildren,
   SetStateAction,
   createContext,
   useContext,
   useState,
 } from "react";
-import { ObjectValues } from "../types";
+import { Ear, ObjectValues } from "../types";
 import { useAttenuationAppNavigation } from "../navigation/useAttenuationAppNavigation";
 import { useDictionary } from "../language";
 
@@ -21,6 +21,8 @@ type TestPlanPageType = ObjectValues<typeof TEST_PLAN_PAGE_TYPES>;
 type TestPlanPage = {
   title: string;
   type: TestPlanPageType;
+  ear?: Ear;
+  withPlug?: boolean;
 };
 
 type TestPlanContextType = {
@@ -36,10 +38,14 @@ const useTestPlanPages = () => {
     WITHOUT_PLUG_LEFT_EAR: {
       title: dictionary["testScreen.title.withoutPlug.leftEar"],
       type: TEST_PLAN_PAGE_TYPES.TEST,
+      ear: "left",
+      withPlug: false,
     },
     WITHOUT_PLUG_RIGHT_EAR: {
       title: dictionary["testScreen.title.withoutPlug.rightEar"],
       type: TEST_PLAN_PAGE_TYPES.TEST,
+      ear: "right",
+      withPlug: false,
     },
     TEST_WITH_PLUGS_INFO: {
       title: dictionary["testScreen.title.testWithPlugsInfo"],
@@ -48,10 +54,14 @@ const useTestPlanPages = () => {
     WITH_PLUG_LEFT_EAR: {
       title: dictionary["testScreen.title.withPlug.leftEar"],
       type: TEST_PLAN_PAGE_TYPES.TEST,
+      ear: "left",
+      withPlug: true,
     },
     WITH_PLUG_RIGHT_EAR: {
       title: dictionary["testScreen.title.withPlug.rightEar"],
       type: TEST_PLAN_PAGE_TYPES.TEST,
+      ear: "right",
+      withPlug: true,
     },
   };
 
@@ -72,9 +82,7 @@ const TestPlanContext = createContext<TestPlanContextType>({
   setTestPlan: noProviderErrorFn,
 });
 
-type TestPlanProviderProps = {
-  children: ReactNode;
-};
+type TestPlanProviderProps = PropsWithChildren;
 
 export const TestPlanProvider = ({ children }: TestPlanProviderProps) => {
   const { TEST_PLAN_PAGES } = useTestPlanPages();
