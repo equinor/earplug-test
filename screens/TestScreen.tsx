@@ -120,7 +120,6 @@ export const TestScreen = () => {
               </Typography>
             </View>
             <View style={styles.middleContentContainer}>
-              <Typography>{systemVolume}</Typography>
               {type === TEST_PLAN_PAGE_TYPES.TEST && isSoundLoaded ? (
                 <>
                   <TestDescription />
