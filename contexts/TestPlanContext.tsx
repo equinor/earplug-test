@@ -29,6 +29,7 @@ type TestPlanContextType = {
   current: TestPlanPage;
   progress: number;
   navigateNext: () => void;
+  resetTestPlan: () => void;
   setTestPlan: Dispatch<SetStateAction<TestPlanPage[]>>;
 };
 
@@ -65,7 +66,15 @@ const useTestPlanPages = () => {
     },
   };
 
-  return { TEST_PLAN_PAGES };
+  const TEST_PLAN_FULL = [
+    TEST_PLAN_PAGES.WITHOUT_PLUG_LEFT_EAR,
+    TEST_PLAN_PAGES.WITHOUT_PLUG_RIGHT_EAR,
+    TEST_PLAN_PAGES.TEST_WITH_PLUGS_INFO,
+    TEST_PLAN_PAGES.WITH_PLUG_LEFT_EAR,
+    TEST_PLAN_PAGES.WITH_PLUG_RIGHT_EAR,
+  ];
+
+  return { TEST_PLAN_FULL };
 };
 
 const noProviderErrorFn = () => {
@@ -79,24 +88,24 @@ const TestPlanContext = createContext<TestPlanContextType>({
   },
   progress: 0,
   navigateNext: noProviderErrorFn,
+  resetTestPlan: noProviderErrorFn,
   setTestPlan: noProviderErrorFn,
 });
 
 type TestPlanProviderProps = PropsWithChildren;
 
 export const TestPlanProvider = ({ children }: TestPlanProviderProps) => {
-  const { TEST_PLAN_PAGES } = useTestPlanPages();
-  const [testPlan, setTestPlan] = useState<TestPlanPage[]>([
-    TEST_PLAN_PAGES.WITHOUT_PLUG_LEFT_EAR,
-    TEST_PLAN_PAGES.WITHOUT_PLUG_RIGHT_EAR,
-    TEST_PLAN_PAGES.TEST_WITH_PLUGS_INFO,
-    TEST_PLAN_PAGES.WITH_PLUG_LEFT_EAR,
-    TEST_PLAN_PAGES.WITH_PLUG_RIGHT_EAR,
-  ]);
+  const { TEST_PLAN_FULL } = useTestPlanPages();
+  const [testPlan, setTestPlan] = useState<TestPlanPage[]>(TEST_PLAN_FULL);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const current = testPlan[currentPageIndex];
   const progress = (currentPageIndex + 1) / testPlan.length;
   const { navigate } = useAttenuationAppNavigation();
+
+  const resetTestPlan = () => {
+    setCurrentPageIndex(0);
+    setTestPlan(TEST_PLAN_FULL);
+  };
 
   const navigateNext = () => {
     if (currentPageIndex < testPlan.length - 1) {
@@ -112,6 +121,7 @@ export const TestPlanProvider = ({ children }: TestPlanProviderProps) => {
         current,
         progress,
         navigateNext,
+        resetTestPlan,
         setTestPlan,
       }}
     >
