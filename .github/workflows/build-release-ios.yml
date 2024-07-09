@@ -96,7 +96,16 @@ jobs:
              with: 
                filename: 'package.json'
                prefix: 'PACKAGEJSON'
-                   
+
+           - name: Patch app.json
+             uses: onlyutkarsh/patch-files-action@v1.0.1
+             with: 
+               fail-if-no-files-patched: true
+               fail-if-error: true
+               files: ./app.json
+               patch-syntax: |
+                 = /expo/ios/buildNumber => "${{ env.BUILD_NUMBER }}"
+              
                    
            - name: Prebuild expo project
              run: |
