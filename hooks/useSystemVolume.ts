@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useInitialSystemVolume } from "./useInitialSystemVolume";
 import { SYSTEM_VOLUME, SYSTEM_VOLUME_INCREMENT } from "../constants/sounds";
 import SystemSetting from "react-native-system-setting";
@@ -44,10 +44,10 @@ export const useSystemVolume = () => {
     adjustSystemVolume("up");
   };
 
-  const resetSystemVolume = () => {
+  const resetSystemVolume = useCallback(() => {
     importedSetSystemVolume(SYSTEM_VOLUME);
     setSystemVolume(SYSTEM_VOLUME);
-  };
+  }, []);
 
   return {
     decreaseSystemVolume,
