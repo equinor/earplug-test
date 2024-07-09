@@ -9,6 +9,7 @@ import { BulletPoint } from "../components/BulletPoint";
 import { Carousel } from "../components/Carousel/Carousel";
 import { useDictionary } from "../language";
 import { useAttenuationAppNavigation } from "../navigation/useAttenuationAppNavigation";
+import { openEarPlugInstructionsURL } from "../utils/openEarPlugInstructionsURL";
 
 export const WelcomeScreen = () => {
   const styles = useStyles(themeStyles);
@@ -49,8 +50,7 @@ export const WelcomeScreen = () => {
           variant="outlined"
           iconName="link"
           title={dictionary["welcomeScreen.earPlugInstructionsButton"]}
-          /*TODO link to the URL given by the stakeholders*/
-          onPress={() => console.error("Not implemented yet!")}
+          onPress={openEarPlugInstructionsURL}
         />
       </View>
     </SafeAreaView>
