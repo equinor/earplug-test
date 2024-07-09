@@ -21,8 +21,6 @@ import soundIndicator from "../assets/sound-indicator.png";
 import { useDictionary } from "../language";
 import { useSystemVolume } from "../hooks/useSystemVolume";
 import { useResults } from "../contexts/ResultsContext";
-import { setSystemVolume } from "../utils/volume/setSystemVolume";
-import { SYSTEM_VOLUME } from "../constants/sounds";
 
 export const TestScreen = () => {
   const styles = useStyles(themeStyles);
@@ -35,8 +33,12 @@ export const TestScreen = () => {
   const soundButtonRef = useRef<SoundButtonControls>(null);
   const [isVolumePage, setIsVolumePage] = useState(false);
   const dictionary = useDictionary();
-  const { decreaseSystemVolume, increaseSystemVolume, systemVolume } =
-    useSystemVolume();
+  const {
+    decreaseSystemVolume,
+    increaseSystemVolume,
+    resetSystemVolume,
+    systemVolume,
+  } = useSystemVolume();
   const { setResult } = useResults();
 
   const onPress: SoundButtonProps["onPress"] = (e) => {
@@ -84,7 +86,7 @@ export const TestScreen = () => {
                 withPlug ? "withPlugs" : "withoutPlugs",
                 systemVolume,
               );
-              setSystemVolume(SYSTEM_VOLUME);
+              resetSystemVolume();
               navigateNext();
             }
           }}

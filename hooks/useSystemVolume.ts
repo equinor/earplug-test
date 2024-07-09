@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useInitialSystemVolume } from "./useInitialSystemVolume";
 import { SYSTEM_VOLUME, SYSTEM_VOLUME_INCREMENT } from "../constants/sounds";
 import SystemSetting from "react-native-system-setting";
@@ -23,29 +23,35 @@ const getNewVolume = (currentVolume: number, upOrDown: UpOrDown) => {
   return newVolume;
 };
 
-const decreaseSystemVolume = () => {
-  void SystemSetting.getVolume().then((volume) => {
-    importedSetSystemVolume(getNewVolume(volume, "down"));
-  });
-};
-
-const increaseSystemVolume = () => {
-  void SystemSetting.getVolume().then((volume) => {
-    importedSetSystemVolume(getNewVolume(volume, "up"));
-  });
-};
-
 export const useSystemVolume = () => {
   const [systemVolume, setSystemVolume] = useState(SYSTEM_VOLUME);
   useInitialSystemVolume();
 
-  useEffect(() => {
-    const volumeListener = SystemSetting.addVolumeListener((data) => {
-      const volume = data.value;
-      setSystemVolume(volume);
+  const adjustSystemVolume = (upOrDown: UpOrDown) => {
+    void SystemSetting.getVolume().then((volume) => {
+      const newVolume = getNewVolume(volume, upOrDown);
+      importedSetSystemVolume(newVolume);
+      setSystemVolume(newVolume);
     });
-    return () => SystemSetting.removeVolumeListener(volumeListener);
-  }, []);
+  };
 
-  return { decreaseSystemVolume, increaseSystemVolume, systemVolume };
+  const decreaseSystemVolume = () => {
+    adjustSystemVolume("down");
+  };
+
+  const increaseSystemVolume = () => {
+    adjustSystemVolume("up");
+  };
+
+  const resetSystemVolume = () => {
+    importedSetSystemVolume(SYSTEM_VOLUME);
+    setSystemVolume(SYSTEM_VOLUME);
+  };
+
+  return {
+    decreaseSystemVolume,
+    increaseSystemVolume,
+    resetSystemVolume,
+    systemVolume,
+  };
 };
