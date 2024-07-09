@@ -14,7 +14,7 @@ import {
   SoundButton,
   SoundButtonProps,
 } from "../components/VolumeButton/SoundButton";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SoundButtonControls } from "../components/VolumeButton/types";
 import { Image, ScrollView, View } from "react-native";
 import soundIndicator from "../assets/sound-indicator.png";
@@ -40,6 +40,10 @@ export const TestScreen = () => {
     systemVolume,
   } = useSystemVolume();
   const { setResult } = useResults();
+
+  useEffect(() => {
+    resetSystemVolume();
+  }, [resetSystemVolume]);
 
   const onPress: SoundButtonProps["onPress"] = (e) => {
     if (e.type === "play" && ear) {
