@@ -30,8 +30,9 @@ export const useSystemVolume = () => {
   const adjustSystemVolume = (upOrDown: UpOrDown) => {
     void SystemSetting.getVolume().then((volume) => {
       const newVolume = getNewVolume(volume, upOrDown);
-      importedSetSystemVolume(newVolume);
-      setSystemVolume(newVolume);
+      const roundedNewVolume = parseFloat(newVolume.toFixed(2));
+      importedSetSystemVolume(roundedNewVolume);
+      setSystemVolume(roundedNewVolume);
     });
   };
 
