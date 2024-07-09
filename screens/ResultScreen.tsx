@@ -15,7 +15,7 @@ export const ResultScreen = () => {
       <Typography>
         Høyre øre uten plugg: {results.right.withoutPlugs}
       </Typography>
-      <Typography>Høyre øre med plugg: {results.left.withPlugs}</Typography>
+      <Typography>Høyre øre med plugg: {results.right.withPlugs}</Typography>
     </SafeAreaView>
   );
 };
