@@ -9,6 +9,7 @@ import InfographicThree from "../../assets/infographic-3.png";
 import { EDSStyleSheet, useStyles } from "@equinor/mad-components";
 import { DimensionValue } from "react-native";
 import { useDictionary } from "../../language";
+import { useResetCarouselOnScreenFocus } from "./useResetCarouselOnScreenFocus";
 
 export const Carousel = () => {
   const pagerViewRef = useRef<PagerView>(null);
@@ -16,6 +17,7 @@ export const Carousel = () => {
   const [selectedPageIndex, setSelectedPageIndex] = useState(0);
   const [height, setHeight] = useState(0);
   const styles = useStyles(carouselStyles, height);
+  useResetCarouselOnScreenFocus(pagerViewRef);
 
   const onPress = (button: "left" | "right") => {
     let nextPage = -1;
