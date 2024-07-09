@@ -1,14 +1,15 @@
+import { EDSStyleSheet, useStyles } from "@equinor/mad-components";
 import { useRef, useState } from "react";
+import { DimensionValue } from "react-native";
 import PagerView from "react-native-pager-view";
-import { CarouselImage } from "./CarouselImage";
-import { CarouselPage } from "./CarouselPage";
-import { CarouselText } from "./CarouselText";
 import InfographicOne from "../../assets/infographic-1.png";
 import InfographicTwo from "../../assets/infographic-2.png";
 import InfographicThree from "../../assets/infographic-3.png";
-import { EDSStyleSheet, useStyles } from "@equinor/mad-components";
-import { DimensionValue } from "react-native";
 import { useDictionary } from "../../language";
+import { CarouselImage } from "./CarouselImage";
+import { CarouselPage } from "./CarouselPage";
+import { CarouselText } from "./CarouselText";
+import { useResetCarouselOnScreenFocus } from "./useResetCarouselOnScreenFocus";
 
 export const Carousel = () => {
   const pagerViewRef = useRef<PagerView>(null);
@@ -16,6 +17,7 @@ export const Carousel = () => {
   const [selectedPageIndex, setSelectedPageIndex] = useState(0);
   const [height, setHeight] = useState(0);
   const styles = useStyles(carouselStyles, height);
+  useResetCarouselOnScreenFocus(pagerViewRef);
 
   const onPress = (button: "left" | "right") => {
     let nextPage = -1;
