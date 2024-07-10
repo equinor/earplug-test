@@ -1,9 +1,14 @@
 {
-  "helloWorld": "Hallo, verden!",
-  "exitDialog.title": "Er du sikker på at du vil avslutte testen?",
-  "exitDialog.description": "Hvis du avslutter testen, mister du all progresjon",
-  "exitDialog.confirm": "Avslutt test",
-  "exitDialog.cancel": "Jeg ombestemte meg",
+  "welcomeScreen.title": "Velkommen til dempingsappen",
+  "welcomeScreen.description": "Dempingsappen er for å sjekke om du får god nok demping fra øreproppene dine",
+  "welcomeScreen.thisIsHowItWorks": "Slik fungerer det",
+  "welcomeScreen.tipsForBestResults": "Tips for best resultat",
+  "welcomeScreen.tip1": "Vi anbefaler at du bruker et over-ear headset",
+  "welcomeScreen.startTestButton": "Start testen",
+  "welcomeScreen.earPlugInstructionsButton": "Ørepropp instruksjoner",
+  "welcomeScreen.carousel.pageOne": "Du vil først teste hørselen din uten ørepropper og så med ørepropper.",
+  "welcomeScreen.carousel.pageTwo": "Forskjellen i dB er dempingen.",
+  "welcomeScreen.carousel.pageThree": "For å få godkjent testen, så må du oppnå en demping på minimum 16dB i hvert øre.",
   "testScreen.title.withoutPlug.leftEar": "Lydtest venstre øre uten propper",
   "testScreen.title.withoutPlug.rightEar": "Lydtest høyre øre uten propper",
   "testScreen.title.testWithPlugsInfo": "Lydtest med propper",
@@ -12,5 +17,9 @@
   "testScreen.title.adjustVolume": "Juster lydvolumet sakte til du akkurat kan høre tonen",
   "testScreen.testDescription": "Sett headesettet på og klikk 'spill av' for å starte lydtesten",
   "testScreen.button.confirmVolume": "Bekreft volum",
-  "testScreen.button.continue": "Fortsett"
+  "testScreen.button.continue": "Fortsett",
+  "exitDialog.title": "Er du sikker på at du vil avslutte testen?",
+  "exitDialog.description": "Hvis du avslutter testen, mister du all progresjon",
+  "exitDialog.confirm": "Avslutt test",
+  "exitDialog.cancel": "Jeg ombestemte meg"
 }

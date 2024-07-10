@@ -1,13 +1,13 @@
-import { ColorSchemeName } from "react-native";
 import { useToken } from "@equinor/mad-components";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { RootStackParamList } from "./types";
-import { TestScreen } from "../screens/TestScreen";
-import { HelloWorld } from "../screens/HelloWorld";
-import { ResultScreen } from "../screens/ResultScreen";
-import { TestPlanProvider } from "../contexts/TestPlanContext";
+import { ColorSchemeName } from "react-native";
 import { ResultsProvider } from "../contexts/ResultsContext";
+import { TestPlanProvider } from "../contexts/TestPlanContext";
+import { ResultScreen } from "../screens/ResultScreen";
+import { TestScreen } from "../screens/TestScreen";
+import { WelcomeScreen } from "../screens/WelcomeScreen";
+import { RootStackParamList } from "./types";
 
 export type NavigationProps = { colorScheme: ColorSchemeName };
 
@@ -43,7 +43,7 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen
         name="WelcomeScreen"
-        component={HelloWorld}
+        component={WelcomeScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
