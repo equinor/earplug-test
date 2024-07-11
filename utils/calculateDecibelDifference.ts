@@ -21,6 +21,6 @@ export const calculateDecibelDifference = (
   if (withPlugs < withoutPlugs) {
     return createError("VOLUME_HIGHER_WITHOUT_PLUGS");
   }
-  const rawValue = 20 * Math.log10(withoutPlugs / withPlugs);
+  const rawValue = 20 * Math.log10(withPlugs / withoutPlugs);
   return createValue(parseFloat(rawValue.toFixed(2)));
 };

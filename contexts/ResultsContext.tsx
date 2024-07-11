@@ -55,7 +55,7 @@ export const ResultsProvider = ({ children }: PropsWithChildren) => {
       return newResults;
     });
   };
-  const decibelDifferenceResult = useDecibelDifference(earVolumeResults);
+  const { decibelDifferenceResult } = useDecibelDifference(earVolumeResults);
   const reset = () => setEarVolumeResults(initialValue);
   return (
     <ResultsContext.Provider

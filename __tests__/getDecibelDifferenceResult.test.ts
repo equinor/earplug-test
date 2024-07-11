@@ -20,7 +20,7 @@ describe("getDecibelDifferenceResult", () => {
 
     const expectedValue1: DecibelDifferenceResult = {
       left: createError("VOLUME_HIGHER_WITHOUT_PLUGS"),
-      right: createValue(-20),
+      right: createValue(20),
     };
     expect(getDecibelDifferenceResult(validEarVolumeResults1)).toEqual(
       expectedValue1,
@@ -39,7 +39,7 @@ describe("getDecibelDifferenceResult", () => {
 
     const expectedValue2: DecibelDifferenceResult = {
       left: createError("VOLUME_HIGHER_WITHOUT_PLUGS"),
-      right: createValue(-80),
+      right: createValue(80),
     };
     expect(getDecibelDifferenceResult(validEarVolumeResults2)).toEqual(
       expectedValue2,

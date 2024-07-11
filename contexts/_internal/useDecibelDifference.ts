@@ -1,10 +1,9 @@
 import { useMemo } from "react";
 import { getDecibelDifferenceResult } from "./getDecibelDifferenceResult";
-import { DecibelDifferenceResult, EarVolumeResults } from "./types";
-export const useDecibelDifference = (
-  results: EarVolumeResults,
-): DecibelDifferenceResult => {
-  return useMemo(() => {
+import { EarVolumeResults } from "./types";
+export const useDecibelDifference = (results: EarVolumeResults) => {
+  const decibelDifferenceResult = useMemo(() => {
     return getDecibelDifferenceResult(results);
   }, [results]);
+  return { decibelDifferenceResult };
 };

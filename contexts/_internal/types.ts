@@ -7,7 +7,7 @@ export type EarVolumeResult = {
   withPlugs: number | null;
   withoutPlugs: number | null;
 };
-export type DecibelDifferenceResult = {
-  left: CalculateDecibelDifferenceResult;
-  right: CalculateDecibelDifferenceResult;
-};
+export type DecibelDifferenceResult = Record<
+  Ear,
+  CalculateDecibelDifferenceResult
+>;
