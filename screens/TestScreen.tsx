@@ -26,6 +26,7 @@ export const TestScreen = () => {
   const styles = useStyles(themeStyles);
   const {
     current: { title, type, ear, withPlug },
+    increaseProgress,
     navigateNext,
     progress,
   } = useTestPlan();
@@ -48,6 +49,7 @@ export const TestScreen = () => {
   const onPress: SoundButtonProps["onPress"] = (e) => {
     if (e.type === "play" && ear) {
       soundButtonRef.current?.setSoundButtonType("volume");
+      increaseProgress();
       setIsVolumePage(true);
       Sound.playInLoop(ear);
     }

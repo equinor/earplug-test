@@ -28,6 +28,7 @@ type TestPlanPage = {
 type TestPlanContextType = {
   current: TestPlanPage;
   progress: number;
+  increaseProgress: () => void;
   navigateNext: () => void;
   resetTestPlan: () => void;
   setTestPlan: Dispatch<SetStateAction<TestPlanPage[]>>;
@@ -77,6 +78,18 @@ const useTestPlanPages = () => {
   return { TEST_PLAN_FULL };
 };
 
+const getNumberOfTestPlanPages = (testPlan: TestPlanPage[]) => {
+  let numberOfPages = 0;
+  testPlan.forEach((testPlanPage) => {
+    if (testPlanPage.type === TEST_PLAN_PAGE_TYPES.TEST) {
+      numberOfPages += 2;
+    } else {
+      numberOfPages += 1;
+    }
+  });
+  return numberOfPages;
+};
+
 const noProviderErrorFn = () => {
   throw new Error("Please call this function within a TestPlanProvider");
 };
@@ -87,6 +100,7 @@ const TestPlanContext = createContext<TestPlanContextType>({
     type: TEST_PLAN_PAGE_TYPES.NOT_FOUND,
   },
   progress: 0,
+  increaseProgress: noProviderErrorFn,
   navigateNext: noProviderErrorFn,
   resetTestPlan: noProviderErrorFn,
   setTestPlan: noProviderErrorFn,
@@ -97,19 +111,27 @@ type TestPlanProviderProps = PropsWithChildren;
 export const TestPlanProvider = ({ children }: TestPlanProviderProps) => {
   const { TEST_PLAN_FULL } = useTestPlanPages();
   const [testPlan, setTestPlan] = useState<TestPlanPage[]>(TEST_PLAN_FULL);
-  const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  const current = testPlan[currentPageIndex];
-  const progress = (currentPageIndex + 1) / testPlan.length;
+  const [testPlanIndex, setTestPlanIndex] = useState(0);
+  const current = testPlan[testPlanIndex];
+  const [pageNumber, setPageNumber] = useState(1);
   const { navigate } = useAttenuationAppNavigation();
 
+  const increaseProgress = () => {
+    setPageNumber((pageNumber) => pageNumber + 1);
+  };
+
+  const progress = pageNumber / getNumberOfTestPlanPages(testPlan);
+
   const resetTestPlan = () => {
-    setCurrentPageIndex(0);
+    setTestPlanIndex(0);
+    setPageNumber(1);
     setTestPlan(TEST_PLAN_FULL);
   };
 
   const navigateNext = () => {
-    if (currentPageIndex < testPlan.length - 1) {
-      setCurrentPageIndex((currentPageIndex) => currentPageIndex + 1);
+    if (testPlanIndex < testPlan.length - 1) {
+      setTestPlanIndex((currentPageIndex) => currentPageIndex + 1);
+      increaseProgress();
     } else {
       navigate("ResultScreen");
     }
@@ -120,6 +142,7 @@ export const TestPlanProvider = ({ children }: TestPlanProviderProps) => {
       value={{
         current,
         progress,
+        increaseProgress,
         navigateNext,
         resetTestPlan,
         setTestPlan,
