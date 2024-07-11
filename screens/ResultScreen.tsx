@@ -1,23 +1,11 @@
 import { EDSStyleSheet, Typography, useStyles } from "@equinor/mad-components";
-import { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useResults } from "../contexts/ResultsContext";
 import { unwrap } from "../utils/valueOrError";
 
 export const ResultScreen = () => {
   const styles = useStyles(themeStyles);
-  const {
-    earVolumeResults: results,
-    setEarVolumeResult: setResult,
-    decibelDifferenceResult,
-  } = useResults();
-  useEffect(() => {
-    setResult("left", "withPlugs", 20);
-    setResult("left", "withoutPlugs", 40);
-    setResult("right", "withPlugs", 60);
-    setResult("right", "withoutPlugs", 80);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run once
-  }, []);
+  const { earVolumeResults: results, decibelDifferenceResult } = useResults();
   return (
     <SafeAreaView style={styles.container}>
       <Typography>Resultater</Typography>
