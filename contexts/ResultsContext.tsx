@@ -1,21 +1,22 @@
-import { PropsWithChildren, createContext, useContext, useState } from "react";
-import { Ear } from "../types";
 import cloneDeep from "lodash.clonedeep";
+import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { Ear } from "../types";
+import { createError } from "../utils/valueOrError";
+import {
+  DecibelDifferenceResult,
+  EarResultKey,
+  EarVolumeResults,
+} from "./_internal/types";
+import { useDecibelDifference } from "./_internal/useDecibelDifference";
 
 type ResultsContextType = {
-  results: Results;
-  setResult: (ear: Ear, type: EarResultKey, value: number) => void;
+  earVolumeResults: EarVolumeResults;
+  setEarVolumeResult: (ear: Ear, type: EarResultKey, value: number) => void;
   reset: () => void;
+  decibelDifferenceResult: DecibelDifferenceResult;
 };
 
-type Results = Record<Ear, EarResult>;
-type EarResultKey = keyof EarResult;
-type EarResult = {
-  withPlugs: number | null;
-  withoutPlugs: number | null;
-};
-
-const initialValue: Results = {
+const initialValue: EarVolumeResults = {
   left: {
     withoutPlugs: null,
     withPlugs: null,
@@ -31,23 +32,40 @@ const noProviderErrorFn = () => {
 };
 
 const ResultsContext = createContext<ResultsContextType>({
-  results: initialValue,
-  setResult: noProviderErrorFn,
+  earVolumeResults: initialValue,
+  setEarVolumeResult: noProviderErrorFn,
   reset: noProviderErrorFn,
+  decibelDifferenceResult: {
+    left: createError("VOLUME_RESULTS_MISSING"),
+    right: createError("VOLUME_RESULTS_MISSING"),
+  },
 });
 
 export const ResultsProvider = ({ children }: PropsWithChildren) => {
-  const [results, setResults] = useState<Results>(initialValue);
-  const setResult: ResultsContextType["setResult"] = (ear, type, value) => {
-    setResults((results) => {
-      const newResults = cloneDeep(results);
+  const [earVolumeResults, setEarVolumeResults] =
+    useState<EarVolumeResults>(initialValue);
+  const setEarVolumeResult: ResultsContextType["setEarVolumeResult"] = (
+    ear,
+    type,
+    value,
+  ) => {
+    setEarVolumeResults((earVolumeResults) => {
+      const newResults = cloneDeep(earVolumeResults);
       newResults[ear][type] = value;
       return newResults;
     });
   };
-  const reset = () => setResults(initialValue);
+  const decibelDifferenceResult = useDecibelDifference(earVolumeResults);
+  const reset = () => setEarVolumeResults(initialValue);
   return (
-    <ResultsContext.Provider value={{ results, setResult, reset }}>
+    <ResultsContext.Provider
+      value={{
+        earVolumeResults,
+        setEarVolumeResult,
+        reset,
+        decibelDifferenceResult,
+      }}
+    >
       {children}
     </ResultsContext.Provider>
   );
