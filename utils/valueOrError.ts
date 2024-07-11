@@ -10,14 +10,14 @@ export type Error<E> = {
   error: E;
 };
 
-export const createValue = <V>(val: V): Value<V> => ({
+export const createValue = <V>(value: V): Value<V> => ({
   type: "value",
-  value: val,
+  value,
 });
 
 export const createError = <E>(error: E): Error<E> => ({
   type: "error",
-  error: error,
+  error,
 });
 
 export function isValue<V, E>(obj: ValueOrError<V, E>): obj is Value<V>;
