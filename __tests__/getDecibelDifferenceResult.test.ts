@@ -1,13 +1,13 @@
+import { getDecibelDifferenceResult } from "../contexts/_internal/getDecibelDifferenceResult";
 import {
   DecibelDifferenceResult,
-  ValidEarVolumeResults,
+  EarVolumeResults,
 } from "../contexts/_internal/types";
-import { getDecibelDifferenceResult } from "../contexts/_internal/getDecibelDifferenceResult";
-import { createValue, createError } from "../utils/valueOrError";
+import { createError, createValue } from "../utils/valueOrError";
 
 describe("getDecibelDifferenceResult", () => {
-  it("Should return a DecibelDifferenceResult object, if given an object of type ValidEarVolumeResultsObject", () => {
-    const validEarVolumeResults1: ValidEarVolumeResults = {
+  it("Should return a DecibelDifferenceResult object", () => {
+    const validEarVolumeResults1: EarVolumeResults = {
       left: {
         withoutPlugs: 1,
         withPlugs: 0.1,
@@ -26,7 +26,7 @@ describe("getDecibelDifferenceResult", () => {
       expectedValue1,
     );
 
-    const validEarVolumeResults2: ValidEarVolumeResults = {
+    const validEarVolumeResults2: EarVolumeResults = {
       left: {
         withoutPlugs: 100,
         withPlugs: 0.1,
