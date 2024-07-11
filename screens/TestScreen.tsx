@@ -40,7 +40,7 @@ export const TestScreen = () => {
     resetSystemVolume,
     systemVolume,
   } = useSystemVolume();
-  const { setResult } = useResults();
+  const { setEarVolumeResult: setResult } = useResults();
 
   useEffect(() => {
     resetSystemVolume();
