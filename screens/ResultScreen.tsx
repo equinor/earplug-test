@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useResults } from "../contexts/ResultsContext";
 import { unwrap } from "../utils/valueOrError";
+import { useTrackResults } from "../hooks/useTrackResults";
 
 export const ResultScreen = () => {
   const styles = useStyles(themeStyles);
@@ -11,6 +12,9 @@ export const ResultScreen = () => {
     setEarVolumeResult: setResult,
     decibelDifferenceResult,
   } = useResults();
+
+  useTrackResults(results, decibelDifferenceResult);
+
   useEffect(() => {
     setResult("left", "withPlugs", 20);
     setResult("left", "withoutPlugs", 40);
