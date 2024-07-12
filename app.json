@@ -17,7 +17,8 @@
       "buildNumber": "1",
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "requireFullScreen": true
     },
     "android": {
       "adaptiveIcon": {
