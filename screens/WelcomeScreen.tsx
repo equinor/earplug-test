@@ -10,6 +10,7 @@ import { Carousel } from "../components/Carousel/Carousel";
 import { useDictionary } from "../language";
 import { useAttenuationAppNavigation } from "../navigation/useAttenuationAppNavigation";
 import { openEarPlugInstructionsURL } from "../utils/openEarPlugInstructionsURL";
+import { Title } from "../components/Title";
 
 export const WelcomeScreen = () => {
   const styles = useStyles(themeStyles);
@@ -18,9 +19,7 @@ export const WelcomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Typography variant="h2" color="primary" style={{ textAlign: "center" }}>
-        {dictionary["welcomeScreen.title"]}
-      </Typography>
+      <Title>{dictionary["welcomeScreen.title"]}</Title>
       <Typography
         group="paragraph"
         variant="body_short"
