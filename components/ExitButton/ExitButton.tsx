@@ -2,6 +2,7 @@ import { Button, IconButtonProps, alert } from "@equinor/mad-components";
 import { useDictionary } from "../../language";
 import { useAttenuationAppNavigation } from "../../navigation/useAttenuationAppNavigation";
 import { ViewProps } from "react-native";
+import { useTestPlan } from "../../contexts/TestPlanContext";
 
 export type ExitButtonProps = Omit<
   IconButtonProps & ViewProps,
@@ -11,6 +12,7 @@ export type ExitButtonProps = Omit<
 export const ExitButton = (props: ExitButtonProps) => {
   const navigation = useAttenuationAppNavigation();
   const dictionary = useDictionary();
+  const { resetTestPlan } = useTestPlan();
   const onPress = () => {
     alert(
       dictionary["exitDialog.title"],
@@ -23,7 +25,10 @@ export const ExitButton = (props: ExitButtonProps) => {
         },
         {
           text: dictionary["exitDialog.confirm"],
-          onPress: () => navigation.navigate("WelcomeScreen"),
+          onPress: () => {
+            resetTestPlan();
+            navigation.navigate("WelcomeScreen");
+          },
           style: "destructive",
           isPreferred: true,
         },

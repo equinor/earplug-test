@@ -1,121 +1,137 @@
 import {
   Dispatch,
-  ReactNode,
+  PropsWithChildren,
   SetStateAction,
   createContext,
   useContext,
   useState,
 } from "react";
-import { Text } from "react-native";
-import { Ear } from "../types";
+import { Ear, ObjectValues } from "../types";
 import { useAttenuationAppNavigation } from "../navigation/useAttenuationAppNavigation";
+import { useDictionary } from "../language";
+
+export const TEST_PLAN_PAGE_TYPES = {
+  TEST: "test",
+  TEST_WITH_PLUGS_INFO: "testWithPlugsInfo",
+  NOT_FOUND: "notFound",
+} as const;
+
+type TestPlanPageType = ObjectValues<typeof TEST_PLAN_PAGE_TYPES>;
 
 type TestPlanPage = {
   title: string;
-  Component: ReactNode;
+  type: TestPlanPageType;
+  ear?: Ear;
+  withPlug?: boolean;
 };
 
 type TestPlanContextType = {
   current: TestPlanPage;
   progress: number;
+  increaseProgress: () => void;
   navigateNext: () => void;
+  resetTestPlan: () => void;
   setTestPlan: Dispatch<SetStateAction<TestPlanPage[]>>;
 };
 
-const adjustVolumePageTitle =
-  "Juster lydvolumet sakte til du akkurat kan høre tonen";
-const getPlaySoundPageTitle = (ear: Ear, withPlugs: boolean) => {
-  const withOrWithout = withPlugs ? "med" : "uten";
-  const earName = ear === "left" ? "venstre" : "høyre";
-  return `Lydtest ${earName} øre ${withOrWithout} propper`;
+const useTestPlanPages = () => {
+  const dictionary = useDictionary();
+  const TEST_PLAN_PAGES: Record<string, TestPlanPage> = {
+    WITHOUT_PLUG_LEFT_EAR: {
+      title: dictionary["testScreen.title.withoutPlug.leftEar"],
+      type: TEST_PLAN_PAGE_TYPES.TEST,
+      ear: "left",
+      withPlug: false,
+    },
+    WITHOUT_PLUG_RIGHT_EAR: {
+      title: dictionary["testScreen.title.withoutPlug.rightEar"],
+      type: TEST_PLAN_PAGE_TYPES.TEST,
+      ear: "right",
+      withPlug: false,
+    },
+    TEST_WITH_PLUGS_INFO: {
+      title: dictionary["testScreen.title.testWithPlugsInfo"],
+      type: TEST_PLAN_PAGE_TYPES.TEST_WITH_PLUGS_INFO,
+    },
+    WITH_PLUG_LEFT_EAR: {
+      title: dictionary["testScreen.title.withPlug.leftEar"],
+      type: TEST_PLAN_PAGE_TYPES.TEST,
+      ear: "left",
+      withPlug: true,
+    },
+    WITH_PLUG_RIGHT_EAR: {
+      title: dictionary["testScreen.title.withPlug.rightEar"],
+      type: TEST_PLAN_PAGE_TYPES.TEST,
+      ear: "right",
+      withPlug: true,
+    },
+  };
+
+  const TEST_PLAN_FULL = [
+    TEST_PLAN_PAGES.WITHOUT_PLUG_LEFT_EAR,
+    TEST_PLAN_PAGES.WITHOUT_PLUG_RIGHT_EAR,
+    TEST_PLAN_PAGES.TEST_WITH_PLUGS_INFO,
+    TEST_PLAN_PAGES.WITH_PLUG_LEFT_EAR,
+    TEST_PLAN_PAGES.WITH_PLUG_RIGHT_EAR,
+  ];
+
+  return { TEST_PLAN_FULL };
 };
 
-const TEST_PLAN_PAGES: Record<string, TestPlanPage> = {
-  WITHOUT_PLUG_LEFT_EAR_PLAY: {
-    title: getPlaySoundPageTitle("left", false),
-    Component: <Text>Spill av lyd knapp</Text>,
-  },
-  WITHOUT_PLUG_LEFT_EAR_TEST: {
-    title: adjustVolumePageTitle,
-    Component: <Text>Volumknapper</Text>,
-  },
-  WITHOUT_PLUG_RIGHT_EAR_PLAY: {
-    title: getPlaySoundPageTitle("right", false),
-    Component: <Text>Spill av lyd knapp</Text>,
-  },
-  WITHOUT_PLUG_RIGHT_EAR_TEST: {
-    title: adjustVolumePageTitle,
-    Component: <Text>Volumknapper</Text>,
-  },
-  TEST_WITH_PLUGS: {
-    title: "Lydtest med propper",
-    Component: <Text>Bilde av hvordan øreplugger settes inn</Text>,
-  },
-  WITH_PLUG_LEFT_EAR_PLAY: {
-    title: getPlaySoundPageTitle("left", true),
-    Component: <Text>Spill av lyd knapp</Text>,
-  },
-  WITH_PLUG_LEFT_EAR_TEST: {
-    title: adjustVolumePageTitle,
-    Component: <Text>Volumknapper</Text>,
-  },
-  WITH_PLUG_RIGHT_EAR_PLAY: {
-    title: getPlaySoundPageTitle("right", true),
-    Component: <Text>Spill av lyd knapp</Text>,
-  },
-  WITH_PLUG_RIGHT_EAR_TEST: {
-    title: adjustVolumePageTitle,
-    Component: <Text>Volumknapper</Text>,
-  },
+const getNumberOfTestPlanPages = (testPlan: TestPlanPage[]) => {
+  let numberOfPages = 0;
+  testPlan.forEach((testPlanPage) => {
+    if (testPlanPage.type === TEST_PLAN_PAGE_TYPES.TEST) {
+      numberOfPages += 2;
+    } else {
+      numberOfPages += 1;
+    }
+  });
+  return numberOfPages;
 };
 
-const TEST_PLAN: Record<string, TestPlanPage[]> = {
-  WITHOUT_PLUG_LEFT_EAR: [
-    TEST_PLAN_PAGES.WITHOUT_PLUG_LEFT_EAR_PLAY,
-    TEST_PLAN_PAGES.WITHOUT_PLUG_LEFT_EAR_TEST,
-  ],
-  WITHOUT_PLUG_RIGHT_EAR: [
-    TEST_PLAN_PAGES.WITHOUT_PLUG_RIGHT_EAR_PLAY,
-    TEST_PLAN_PAGES.WITHOUT_PLUG_RIGHT_EAR_TEST,
-  ],
-  TEST_WITH_PLUGS: [TEST_PLAN_PAGES.TEST_WITH_PLUGS],
-  WITH_PLUG_LEFT_EAR: [
-    TEST_PLAN_PAGES.WITH_PLUG_LEFT_EAR_PLAY,
-    TEST_PLAN_PAGES.WITH_PLUG_LEFT_EAR_TEST,
-  ],
-  WITH_PLUG_RIGHT_EAR: [
-    TEST_PLAN_PAGES.WITH_PLUG_RIGHT_EAR_PLAY,
-    TEST_PLAN_PAGES.WITH_PLUG_RIGHT_EAR_TEST,
-  ],
+const noProviderErrorFn = () => {
+  throw new Error("Please call this function within a TestPlanProvider");
 };
 
 const TestPlanContext = createContext<TestPlanContextType>({
-  current: TEST_PLAN.WITHOUT_PLUG_LEFT_EAR[0],
+  current: {
+    title: "You need to use this inside of a TestPlanProvider",
+    type: TEST_PLAN_PAGE_TYPES.NOT_FOUND,
+  },
   progress: 0,
-  navigateNext: () => undefined,
-  setTestPlan: () => undefined,
+  increaseProgress: noProviderErrorFn,
+  navigateNext: noProviderErrorFn,
+  resetTestPlan: noProviderErrorFn,
+  setTestPlan: noProviderErrorFn,
 });
 
-type TestPlanProviderProps = {
-  children: ReactNode;
-};
+type TestPlanProviderProps = PropsWithChildren;
 
 export const TestPlanProvider = ({ children }: TestPlanProviderProps) => {
-  const [testPlan, setTestPlan] = useState<TestPlanPage[]>([
-    ...TEST_PLAN.WITHOUT_PLUG_LEFT_EAR,
-    ...TEST_PLAN.WITHOUT_PLUG_RIGHT_EAR,
-    ...TEST_PLAN.TEST_WITH_PLUGS,
-    ...TEST_PLAN.WITH_PLUG_LEFT_EAR,
-    ...TEST_PLAN.WITH_PLUG_RIGHT_EAR,
-  ]);
-  const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  const current = testPlan[currentPageIndex];
-  const progress = (currentPageIndex + 1) / testPlan.length;
+  const { TEST_PLAN_FULL } = useTestPlanPages();
+  const [testPlan, setTestPlan] = useState<TestPlanPage[]>(TEST_PLAN_FULL);
+  const [testPlanIndex, setTestPlanIndex] = useState(0);
+  const current = testPlan[testPlanIndex];
+  const [pageNumber, setPageNumber] = useState(1);
   const { navigate } = useAttenuationAppNavigation();
 
+  const increaseProgress = () => {
+    setPageNumber((pageNumber) => pageNumber + 1);
+  };
+
+  const progress = pageNumber / getNumberOfTestPlanPages(testPlan);
+
+  const resetTestPlan = () => {
+    setTestPlanIndex(0);
+    setPageNumber(1);
+    setTestPlan(TEST_PLAN_FULL);
+  };
+
   const navigateNext = () => {
-    if (currentPageIndex < testPlan.length - 1) {
-      setCurrentPageIndex((currentPageIndex) => currentPageIndex + 1);
+    if (testPlanIndex < testPlan.length - 1) {
+      setTestPlanIndex((currentPageIndex) => currentPageIndex + 1);
+      increaseProgress();
     } else {
       navigate("ResultScreen");
     }
@@ -126,7 +142,9 @@ export const TestPlanProvider = ({ children }: TestPlanProviderProps) => {
       value={{
         current,
         progress,
+        increaseProgress,
         navigateNext,
+        resetTestPlan,
         setTestPlan,
       }}
     >
