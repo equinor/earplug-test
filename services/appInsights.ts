@@ -1,5 +1,6 @@
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import { ReactNativePlugin } from "@microsoft/applicationinsights-react-native";
+import { instrumentationKey } from "../settings.json";
 import {
   DecibelDifferenceResult,
   EarVolumeResults,
@@ -8,7 +9,7 @@ import {
 const RNPlugin = new ReactNativePlugin();
 const appInsights = new ApplicationInsights({
   config: {
-    instrumentationKey: "ddf92b95-2458-4cec-82e6-872b54112973",
+    instrumentationKey,
     extensions: [RNPlugin],
   },
 });
