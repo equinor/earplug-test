@@ -21,6 +21,7 @@ import soundIndicator from "../assets/sound-indicator.png";
 import { useDictionary } from "../language";
 import { useSystemVolume } from "../hooks/useSystemVolume";
 import { useResults } from "../contexts/ResultsContext";
+import { Title } from "../components/Title";
 
 export const TestScreen = () => {
   const styles = useStyles(themeStyles);
@@ -119,11 +120,11 @@ export const TestScreen = () => {
             <View style={styles.topContentContainer}>
               <LinearProgress value={progress} />
               <ExitButton style={styles.exitButton} />
-              <Typography variant="h2" color="primary" style={styles.title}>
+              <Title>
                 {isVolumePage
                   ? dictionary["testScreen.title.adjustVolume"]
                   : title}
-              </Typography>
+              </Title>
             </View>
             <View style={styles.middleContentContainer}>
               {type === TEST_PLAN_PAGE_TYPES.TEST && isSoundLoaded ? (
