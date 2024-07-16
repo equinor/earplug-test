@@ -160,9 +160,6 @@ const themeStyles = EDSStyleSheet.create((theme) => ({
   topSection: { flex: 1, maxHeight: 800 },
   topContentContainer: { gap: 16 },
   exitButton: { alignSelf: "flex-end" },
-  title: {
-    textAlign: "center",
-  },
   description: {
     textAlign: "center",
   },
