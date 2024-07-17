@@ -6,13 +6,14 @@ import {
   useContext,
   useState,
 } from "react";
+import { submitFeedback } from "../services/appInsights";
 
 type FeedbackContextType = {
   rating: number | undefined;
   setRating: (rating: number) => void;
   improvementText: string | undefined;
   setImprovementText: (text: string) => void;
-  submit: () => Promise<void>;
+  submit: () => void;
 };
 
 const noProviderErrorFn = () => {
@@ -32,7 +33,6 @@ const FeedbackContext = createContext<FeedbackContextType>(initialState);
 export const FeedbackProvider = ({ children }: PropsWithChildren) => {
   const [rating, setRatingInternal] = useState<number>();
   const [improvementText, setImprovementText] = useState<string>();
-
   const setRating = useCallback(
     (num: number) => {
       if (num > 5) num = 5;
@@ -42,11 +42,16 @@ export const FeedbackProvider = ({ children }: PropsWithChildren) => {
     [setRatingInternal],
   );
 
-  const submit = useCallback(async () => {
+  const submit = useCallback(() => {
     //TODO
-    addToast({ type: "error", text: "Not implemented yet" });
-    await Promise.resolve();
-  }, []);
+    submitFeedback(rating, improvementText);
+    setRatingInternal(undefined);
+    setImprovementText(undefined);
+    addToast({
+      type: "success",
+      text: "Your feedback has been submitted",
+    });
+  }, [improvementText, rating]);
 
   return (
     <FeedbackContext.Provider

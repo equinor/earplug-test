@@ -14,8 +14,10 @@ export const NavigationButtons = () => {
   const navigate = () => navigation.navigate("WelcomeScreen");
 
   const onPressSubmit = () => {
-    void submit().then(navigate);
+    submit();
+    navigate();
   };
+
   return (
     <View style={styles.buttonContainer}>
       <Button
