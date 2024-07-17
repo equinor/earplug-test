@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { submitFeedback } from "../services/appInsights";
+import { useDictionary } from "../language";
 
 type FeedbackContextType = {
   rating: number | undefined;
@@ -33,6 +34,7 @@ const FeedbackContext = createContext<FeedbackContextType>(initialState);
 export const FeedbackProvider = ({ children }: PropsWithChildren) => {
   const [rating, setRatingInternal] = useState<number>();
   const [improvementText, setImprovementText] = useState<string>();
+  const dictionary = useDictionary();
   const setRating = useCallback(
     (num: number) => {
       if (num > 5) num = 5;
@@ -49,9 +51,9 @@ export const FeedbackProvider = ({ children }: PropsWithChildren) => {
     setImprovementText(undefined);
     addToast({
       type: "success",
-      text: "Your feedback has been submitted",
+      text: dictionary["feedback.thankYou"],
     });
-  }, [improvementText, rating]);
+  }, [improvementText, rating, dictionary]);
 
   return (
     <FeedbackContext.Provider
