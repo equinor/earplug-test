@@ -1,10 +1,17 @@
-import { EDSStyleSheet, Typography, useStyles } from "@equinor/mad-components";
+import {
+  Button,
+  EDSStyleSheet,
+  Typography,
+  useStyles,
+} from "@equinor/mad-components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useResults } from "../contexts/ResultsContext";
 import { unwrap } from "../utils/valueOrError";
+import { useAttenuationAppNavigation } from "../navigation/useAttenuationAppNavigation";
 
 export const ResultScreen = () => {
   const styles = useStyles(themeStyles);
+  const navigation = useAttenuationAppNavigation();
   const { earVolumeResults: results, decibelDifferenceResult } = useResults();
   return (
     <SafeAreaView style={styles.container}>
@@ -23,6 +30,10 @@ export const ResultScreen = () => {
       <Typography>
         Differanse høyre øre: {unwrap(decibelDifferenceResult.right)} dB
       </Typography>
+      <Button
+        title="Done"
+        onPress={() => navigation.navigate("FeedbackScreen")}
+      />
     </SafeAreaView>
   );
 };

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@equinor/mad-components": "^0.14.10",
+    "@equinor/mad-toast": "^0.1.0",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "expo": "~51.0.14",

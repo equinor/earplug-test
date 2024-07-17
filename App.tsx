@@ -4,6 +4,8 @@ import { useColorScheme } from "./hooks/useColorScheme";
 import { Navigation } from "./navigation";
 import { getEDSDensity } from "./utils/getEDSDensity";
 import { useLockScreenOrientation } from "./hooks/useLockScreenOrientation";
+import { DoneButtonInputAccessoryView } from "./components/DoneButtonInputAccessoryView";
+import { ToastEmitter } from "@equinor/mad-toast";
 
 export default function App() {
   const colorScheme = useColorScheme();
@@ -14,6 +16,8 @@ export default function App() {
     <SafeAreaProvider>
       <EDSProvider colorScheme={colorScheme} density={getEDSDensity()}>
         <Navigation colorScheme={colorScheme} />
+        <DoneButtonInputAccessoryView />
+        <ToastEmitter topOffset={70} />
       </EDSProvider>
     </SafeAreaProvider>
   );
