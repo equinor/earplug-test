@@ -2,10 +2,14 @@ import { EDSStyleSheet, Typography, useStyles } from "@equinor/mad-components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useResults } from "../contexts/ResultsContext";
 import { unwrap } from "../utils/valueOrError";
+import { useTrackResults } from "../hooks/useTrackResults";
 
 export const ResultScreen = () => {
   const styles = useStyles(themeStyles);
   const { earVolumeResults: results, decibelDifferenceResult } = useResults();
+
+  useTrackResults(results, decibelDifferenceResult);
+  
   return (
     <SafeAreaView style={styles.container}>
       <Typography>Resultater</Typography>
