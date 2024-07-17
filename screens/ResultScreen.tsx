@@ -16,7 +16,7 @@ export const ResultScreen = () => {
   const { earVolumeResults: results, decibelDifferenceResult } = useResults();
 
   useTrackResults(results, decibelDifferenceResult);
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <Typography>Resultater</Typography>
