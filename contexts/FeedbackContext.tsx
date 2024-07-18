@@ -39,13 +39,12 @@ export const FeedbackProvider = ({ children }: PropsWithChildren) => {
     (num: number) => {
       if (num > 5) num = 5;
       if (num < 1) num = 1;
-      setRatingInternal(() => num);
+      setRatingInternal(num);
     },
     [setRatingInternal],
   );
 
   const submit = useCallback(() => {
-    //TODO
     submitFeedback(rating, improvementText);
     setRatingInternal(undefined);
     setImprovementText(undefined);
