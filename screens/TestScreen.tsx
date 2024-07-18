@@ -107,7 +107,7 @@ export const TestScreen = () => {
         />
       );
     }
-    return <Button title="" style={{ opacity: 0 }} />;
+    return <Button title="" style={styles.invisible} />;
   };
 
   return (
@@ -173,5 +173,8 @@ const themeStyles = EDSStyleSheet.create((theme) => ({
   bottomSection: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  invisible: {
+    opacity: 0,
   },
 }));

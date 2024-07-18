@@ -18,19 +18,27 @@ export const TEST_PLAN_PAGE_TYPES = {
 
 type TestPlanPageType = ObjectValues<typeof TEST_PLAN_PAGE_TYPES>;
 
-type TestPlanPage = {
+export type TestPlanPage = {
   title: string;
   type: TestPlanPageType;
   ear?: Ear;
   withPlug?: boolean;
 };
 
+const TEST_PLAN = {
+  WITHOUT_PLUGS: "withoutPlugs",
+  WITH_PLUGS: "withPlugs",
+  FULL: "full",
+} as const;
+
+type TestPlan = ObjectValues<typeof TEST_PLAN>;
+
 type TestPlanContextType = {
   current: TestPlanPage;
   progress: number;
   increaseProgress: () => void;
   navigateNext: () => void;
-  resetTestPlan: () => void;
+  resetTestPlan: (testPlan: TestPlan) => void;
   setTestPlan: Dispatch<SetStateAction<TestPlanPage[]>>;
 };
 
@@ -67,15 +75,20 @@ const useTestPlanPages = () => {
     },
   };
 
-  const TEST_PLAN_FULL = [
+  const TEST_PLAN_WITHOUT_PLUGS = [
     TEST_PLAN_PAGES.WITHOUT_PLUG_LEFT_EAR,
     TEST_PLAN_PAGES.WITHOUT_PLUG_RIGHT_EAR,
+  ];
+
+  const TEST_PLAN_WITH_PLUGS = [
     TEST_PLAN_PAGES.TEST_WITH_PLUGS_INFO,
     TEST_PLAN_PAGES.WITH_PLUG_LEFT_EAR,
     TEST_PLAN_PAGES.WITH_PLUG_RIGHT_EAR,
   ];
 
-  return { TEST_PLAN_FULL };
+  const TEST_PLAN_FULL = [...TEST_PLAN_WITHOUT_PLUGS, ...TEST_PLAN_WITH_PLUGS];
+
+  return { TEST_PLAN_WITHOUT_PLUGS, TEST_PLAN_WITH_PLUGS, TEST_PLAN_FULL };
 };
 
 const getNumberOfTestPlanPages = (testPlan: TestPlanPage[]) => {
@@ -109,7 +122,8 @@ const TestPlanContext = createContext<TestPlanContextType>({
 type TestPlanProviderProps = PropsWithChildren;
 
 export const TestPlanProvider = ({ children }: TestPlanProviderProps) => {
-  const { TEST_PLAN_FULL } = useTestPlanPages();
+  const { TEST_PLAN_WITHOUT_PLUGS, TEST_PLAN_WITH_PLUGS, TEST_PLAN_FULL } =
+    useTestPlanPages();
   const [testPlan, setTestPlan] = useState<TestPlanPage[]>(TEST_PLAN_FULL);
   const [testPlanIndex, setTestPlanIndex] = useState(0);
   const current = testPlan[testPlanIndex];
@@ -122,10 +136,23 @@ export const TestPlanProvider = ({ children }: TestPlanProviderProps) => {
 
   const progress = pageNumber / getNumberOfTestPlanPages(testPlan);
 
-  const resetTestPlan = () => {
+  const resetTestPlan = (testPlan: TestPlan) => {
+    let newTestPlan: TestPlanPage[] = [];
     setTestPlanIndex(0);
     setPageNumber(1);
-    setTestPlan(TEST_PLAN_FULL);
+
+    switch (testPlan) {
+      case TEST_PLAN.WITHOUT_PLUGS:
+        newTestPlan = TEST_PLAN_WITHOUT_PLUGS;
+        break;
+      case TEST_PLAN.WITH_PLUGS:
+        newTestPlan = TEST_PLAN_WITH_PLUGS;
+        break;
+      case TEST_PLAN.FULL:
+        newTestPlan = TEST_PLAN_FULL;
+        break;
+    }
+    setTestPlan(newTestPlan);
   };
 
   const navigateNext = () => {

@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ColorSchemeName } from "react-native";
 import { ResultsProvider } from "../contexts/ResultsContext";
 import { TestPlanProvider } from "../contexts/TestPlanContext";
-import { ResultScreen } from "../screens/ResultScreen";
+import { ResultScreen } from "../screens/ResultScreen/ResultScreen";
 import { TestScreen } from "../screens/TestScreen";
 import { WelcomeScreen } from "../screens/WelcomeScreen";
 import { RootStackParamList } from "./types";

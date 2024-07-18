@@ -1,0 +1,2 @@
+export const ATTENUATION_THRESHOLD_LOWER = 16;
+export const MAX_ATTENUATION = 32;
