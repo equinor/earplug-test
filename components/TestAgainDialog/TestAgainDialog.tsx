@@ -1,5 +1,4 @@
 import { Button, Spacer, Typography } from "@equinor/mad-components";
-import { IconButton } from "@equinor/mad-components/dist/components/Button/IconButton";
 import { Dialog } from "@equinor/mad-components/dist/components/Dialog";
 import { StyleSheet, View } from "react-native";
 import { useDictionary } from "../../language";
@@ -41,11 +40,11 @@ export const TestAgainDialog = ({
       <Dialog.CustomContent>
         <View style={styles.container}>
           <View style={styles.titleAndCloseContainer}>
-            <IconButton name="ghost" disabled style={styles.invisible} />
+            <Button.Icon name="ghost" disabled style={styles.invisible} />
             <Typography variant="h3">
               {dictionary["resultScreen.button.testAgain"]}
             </Typography>
-            <IconButton
+            <Button.Icon
               name="close"
               variant="ghost"
               onPress={() => setIsOpen(false)}
