@@ -25,6 +25,7 @@
   "resultScreen.description.leftEar": "i venstre øre",
   "resultScreen.description.rightEar": "i høyre øre",
   "resultScreen.description.notApproved": "Vi anbefaler at du prøver å få bedre isett og tar testen på nytt. Hvis du fortsatt ikke får høy nok demping så prøv med en annen størrelse på proppene",
+  "resultScreen.description.error": "Det oppstod en feil under testingen og ber om at du tar testen på nytt.",
   "resultScreen.button.testAgain": "Test på nytt",
   "resultScreen.button.done": "Ferdig",
   "resultScreen.chart.label.left": "Venstre",

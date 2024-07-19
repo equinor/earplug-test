@@ -1,20 +1,16 @@
 import {
   Button,
   EDSStyleSheet,
-  Typography,
+  Spacer,
   useStyles,
 } from "@equinor/mad-components";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useResults } from "../../contexts/ResultsContext";
-import { unwrap } from "../../utils/valueOrError";
 import { ScrollView } from "react-native-gesture-handler";
 import { View } from "react-native";
-import { ExitButton } from "../../components/ExitButton/ExitButton";
 import { useDictionary } from "../../language";
 import { useState } from "react";
-import { DecibelDifferenceResult } from "../../contexts/_internal/types";
 import { colors } from "@equinor/mad-components/dist/styling";
-import { IconButton } from "@equinor/mad-components/dist/components/Button/IconButton";
 import {
   ATTENUATION_THRESHOLD_LOWER,
   MAX_ATTENUATION,
@@ -24,6 +20,9 @@ import { useAttenuationAppNavigation } from "../../navigation/useAttenuationAppN
 import { TestAgainDialog } from "../../components/TestAgainDialog/TestAgainDialog";
 import { HelpButton } from "./HelpButton";
 import { Bar, BAR_HEIGHT } from "./Bar";
+import { Title } from "../../components/Title";
+import { Description } from "./Description";
+import { Subtitle } from "./Subtitle";
 
 export const ResultScreen = () => {
   const [isTestAgainDialogOpen, setIsTestAgainDialogOpen] = useState(false);
@@ -44,51 +43,14 @@ export const ResultScreen = () => {
   });
   const dictionary = useDictionary();
 
-  const getSubtitle = (isAttenuationApproved: boolean) => {
-    if (isAttenuationApproved) {
-      return dictionary["resultScreen.subtitle.approved"];
-    }
-    return dictionary["resultScreen.subtitle.notApproved"];
-  };
-
-  const getDescription = (
-    isAttenuationApproved: boolean,
-    decibelDifferenceResult: DecibelDifferenceResult,
-  ) => {
-    return (
-      <Typography>
-        {dictionary["resultScreen.description.partOne"]}{" "}
-        <Typography
-          bold
-          style={styles.leftEar}
-        >{`${unwrap(decibelDifferenceResult.left)} dB ${dictionary["resultScreen.description.leftEar"]}`}</Typography>{" "}
-        &{" "}
-        <Typography bold style={styles.rightEar}>
-          {`${unwrap(decibelDifferenceResult.right)} dB ${dictionary["resultScreen.description.rightEar"]}`}
-        </Typography>
-        .{" "}
-        {isAttenuationApproved
-          ? ""
-          : `${dictionary["resultScreen.description.notApproved"]}.`}
-      </Typography>
-    );
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View>
-          <View style={styles.titleAndExitButtonContainer}>
-            <ExitButton disabled style={styles.invisible} />
-            <Typography variant="h2" color="primary">
-              {dictionary["resultScreen.title"]}
-            </Typography>
-            <ExitButton />
-          </View>
-          <Typography variant="h5" style={styles.subtitle}>
-            {getSubtitle(isAttenuationApproved)}
-          </Typography>
-          {getDescription(isAttenuationApproved, decibelDifferenceResult)}
+          <Title>{dictionary["resultScreen.title"]}</Title>
+          <Spacer />
+          <Subtitle />
+          <Description />
         </View>
         <View style={styles.middleContainer}>
           <View>
@@ -109,7 +71,7 @@ export const ResultScreen = () => {
         </View>
         <View style={styles.bottomContainer}>
           <View style={styles.buttonRow}>
-            <IconButton name="ghost" disabled style={styles.invisible} />
+            <Button.Icon name="ghost" disabled style={styles.invisible} />
             <Button
               variant={isAttenuationApproved ? "outlined" : "contained"}
               title={dictionary["resultScreen.button.testAgain"]}
@@ -135,14 +97,7 @@ export const ResultScreen = () => {
   );
 };
 
-type ThemeStylesProps = {
-  decibelDifferenceResult: DecibelDifferenceResult;
-  isAttenuationApproved: boolean;
-  isAttenuationApprovedLeftEar: boolean;
-  isAttenuationApprovedRightEar: boolean;
-};
-
-const themeStyles = EDSStyleSheet.create((theme, props: ThemeStylesProps) => {
+const themeStyles = EDSStyleSheet.create((theme) => {
   return {
     container: {
       flex: 1,
@@ -160,25 +115,8 @@ const themeStyles = EDSStyleSheet.create((theme, props: ThemeStylesProps) => {
       marginBottom: theme.spacing.spacer.medium,
     },
     invisible: { opacity: 0 },
-    subtitle: {
-      textAlign: "center",
-      color: props.isAttenuationApproved
-        ? theme.colors.feedback.success
-        : theme.colors.feedback.danger,
-      marginBottom: theme.spacing.spacer.small,
-    },
     middleContainer: {
       alignItems: "center",
-    },
-    leftEar: {
-      color: props.isAttenuationApprovedLeftEar
-        ? theme.colors.feedback.success
-        : theme.colors.feedback.danger,
-    },
-    rightEar: {
-      color: props.isAttenuationApprovedRightEar
-        ? theme.colors.feedback.success
-        : theme.colors.feedback.danger,
     },
     lowerDbThreshold: {
       backgroundColor: colors.feedback_danger_light_resting,

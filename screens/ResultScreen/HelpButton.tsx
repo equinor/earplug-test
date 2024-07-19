@@ -1,5 +1,4 @@
-import { Popover, Typography } from "@equinor/mad-components";
-import { IconButton } from "@equinor/mad-components/dist/components/Button/IconButton";
+import { Button, Popover, Typography } from "@equinor/mad-components";
 import { useRef, useState } from "react";
 import { View } from "react-native";
 import { useDictionary } from "../../language";
@@ -11,7 +10,7 @@ export const HelpButton = () => {
   const dictionary = useDictionary();
   return (
     <>
-      <IconButton
+      <Button.Icon
         ref={helpButtonRef}
         name="help-circle-outline"
         variant="ghost"

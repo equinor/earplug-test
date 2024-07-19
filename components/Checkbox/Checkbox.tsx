@@ -1,5 +1,4 @@
-import { Typography } from "@equinor/mad-components";
-import { IconButton } from "@equinor/mad-components/dist/components/Button/IconButton";
+import { Button, Typography } from "@equinor/mad-components";
 import { Dispatch, SetStateAction } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -12,7 +11,7 @@ type CheckboxProps = {
 export const Checkbox = ({ isChecked, label, onCheck }: CheckboxProps) => {
   return (
     <View style={styles.container}>
-      <IconButton
+      <Button.Icon
         name={isChecked ? "checkbox-marked" : "checkbox-blank-outline"}
         variant="ghost"
         onPress={() => onCheck(!isChecked)}

@@ -48,7 +48,7 @@ export const Bar = ({
       </View>
       <Typography style={styles.label}>{label}</Typography>
       <Typography bold style={styles.dbLabel}>
-        {`${unwrap(calculateDecibelDifferenceResult)} dB`}
+        {`${isValue(calculateDecibelDifferenceResult) ? unwrap(calculateDecibelDifferenceResult) : "0"} dB`}
       </Typography>
     </View>
   );

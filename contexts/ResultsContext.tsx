@@ -16,7 +16,7 @@ import {
 import { useDecibelDifference } from "./_internal/useDecibelDifference";
 import { getIsAttenuationApprovedForEar } from "./_internal/getIsAttenuationApprovedForEar";
 
-type ResultsContextType = {
+export type ResultsContextType = {
   isAttenuationApproved: boolean;
   isAttenuationApprovedLeftEar: boolean;
   isAttenuationApprovedRightEar: boolean;
