@@ -52,7 +52,11 @@ export const FeedbackProvider = ({ children }: PropsWithChildren) => {
   );
 
   const submit = useCallback(() => {
-    submitFeedback(rating, improvementText);
+    let improvementTextToSubmit: string | undefined = improvementText;
+    if (improvementText?.trim() === "") {
+      improvementTextToSubmit = undefined;
+    }
+    submitFeedback(rating, improvementTextToSubmit);
     setRatingInternal(undefined);
     setImprovementText(undefined);
     addToast({
