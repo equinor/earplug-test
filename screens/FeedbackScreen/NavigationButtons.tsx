@@ -9,7 +9,7 @@ export const NavigationButtons = () => {
   const styles = useFeedbackStyles();
   const dictionary = useDictionary();
   const navigation = useAttenuationAppNavigation();
-  const { submit } = useFeedback();
+  const { improvementText, rating, submit } = useFeedback();
 
   const navigate = () => navigation.navigate("WelcomeScreen");
 
@@ -21,6 +21,10 @@ export const NavigationButtons = () => {
   return (
     <View style={styles.buttonContainer}>
       <Button
+        disabled={
+          rating === undefined &&
+          (improvementText === undefined || improvementText.trim() === "")
+        }
         title={dictionary["feedbackScreen.sendFeedback"]}
         onPress={onPressSubmit}
       />
