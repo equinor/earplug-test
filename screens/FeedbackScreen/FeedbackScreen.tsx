@@ -5,9 +5,11 @@ import { GiveRating } from "./GiveRating";
 import { HowCanWeImprove } from "./HowCanWeImprove";
 import { NavigationButtons } from "./NavigationButtons";
 import { useFeedbackStyles } from "./useFeedbackStyles";
+import { useFeedback } from "../../contexts/FeedbackContext";
 
 export const FeedbackScreen = () => {
   const styles = useFeedbackStyles();
+  const { isTextFieldFocused } = useFeedback();
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -16,8 +18,12 @@ export const FeedbackScreen = () => {
           style={styles.keyboardAvoidingView}
         >
           <View style={styles.keyboardAvoidingViewInnerContainer}>
-            <FeedbackIntroduction />
-            <GiveRating />
+            {!isTextFieldFocused && (
+              <>
+                <FeedbackIntroduction />
+                <GiveRating />
+              </>
+            )}
             <HowCanWeImprove />
           </View>
         </KeyboardAvoidingView>

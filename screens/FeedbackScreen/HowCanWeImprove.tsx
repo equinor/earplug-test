@@ -5,9 +5,10 @@ import { useFeedback } from "../../contexts/FeedbackContext";
 import { useDictionary } from "../../language";
 
 export const HowCanWeImprove = () => {
+  const { improvementText, setImprovementText, setIsTextFieldFocused } =
+    useFeedback();
   const styles = useFeedbackStyles();
   const dictionary = useDictionary();
-  const { improvementText, setImprovementText } = useFeedback();
 
   return (
     <View style={styles.contentContainer}>
@@ -18,6 +19,8 @@ export const HowCanWeImprove = () => {
         <TextField
           value={improvementText}
           onChange={setImprovementText}
+          onFocus={() => setIsTextFieldFocused(true)}
+          onBlur={() => setIsTextFieldFocused(false)}
           multiline
           inputAccessoryViewID="keyboard-done-button"
           label={dictionary["feedbackScreen.improvementSuggestions"]}

@@ -1,7 +1,9 @@
 import { addToast } from "@equinor/mad-toast";
 import {
   createContext,
+  Dispatch,
   PropsWithChildren,
+  SetStateAction,
   useCallback,
   useContext,
   useState,
@@ -9,11 +11,13 @@ import {
 import { submitFeedback } from "../services/appInsights";
 import { useDictionary } from "../language";
 
-type FeedbackContextType = {
+export type FeedbackContextType = {
   rating: number | undefined;
   setRating: (rating: number) => void;
   improvementText: string | undefined;
   setImprovementText: (text: string) => void;
+  isTextFieldFocused: boolean;
+  setIsTextFieldFocused: Dispatch<SetStateAction<boolean>>;
   submit: () => void;
 };
 
@@ -26,6 +30,8 @@ const initialState = {
   setRating: noProviderErrorFn,
   improvementText: undefined,
   setImprovementText: noProviderErrorFn,
+  isTextFieldFocused: false,
+  setIsTextFieldFocused: noProviderErrorFn,
   submit: noProviderErrorFn,
 };
 
@@ -34,6 +40,7 @@ const FeedbackContext = createContext<FeedbackContextType>(initialState);
 export const FeedbackProvider = ({ children }: PropsWithChildren) => {
   const [rating, setRatingInternal] = useState<number>();
   const [improvementText, setImprovementText] = useState<string>();
+  const [isTextFieldFocused, setIsTextFieldFocused] = useState(false);
   const dictionary = useDictionary();
   const setRating = useCallback(
     (num: number) => {
@@ -56,7 +63,15 @@ export const FeedbackProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <FeedbackContext.Provider
-      value={{ rating, setRating, improvementText, setImprovementText, submit }}
+      value={{
+        rating,
+        setRating,
+        improvementText,
+        setImprovementText,
+        isTextFieldFocused,
+        setIsTextFieldFocused,
+        submit,
+      }}
     >
       {children}
     </FeedbackContext.Provider>
