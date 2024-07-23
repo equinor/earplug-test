@@ -8,6 +8,8 @@ import { ResultScreen } from "../screens/ResultScreen";
 import { TestScreen } from "../screens/TestScreen";
 import { WelcomeScreen } from "../screens/WelcomeScreen";
 import { RootStackParamList } from "./types";
+import { FeedbackScreen } from "../screens/FeedbackScreen/FeedbackScreen";
+import { FeedbackProvider } from "../contexts/FeedbackContext";
 
 export type NavigationProps = { colorScheme: ColorSchemeName };
 
@@ -27,11 +29,13 @@ export function Navigation({ colorScheme }: NavigationProps) {
         },
       }}
     >
-      <ResultsProvider>
-        <TestPlanProvider>
-          <RootNavigator />
-        </TestPlanProvider>
-      </ResultsProvider>
+      <FeedbackProvider>
+        <ResultsProvider>
+          <TestPlanProvider>
+            <RootNavigator />
+          </TestPlanProvider>
+        </ResultsProvider>
+      </FeedbackProvider>
     </NavigationContainer>
   );
 }
@@ -40,22 +44,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="WelcomeScreen"
-        component={WelcomeScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="TestScreen"
-        component={TestScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="ResultScreen"
-        component={ResultScreen}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+      <Stack.Screen name="TestScreen" component={TestScreen} />
+      <Stack.Screen name="ResultScreen" component={ResultScreen} />
+      <Stack.Screen name="FeedbackScreen" component={FeedbackScreen} />
     </Stack.Navigator>
   );
 }
