@@ -35,8 +35,17 @@
   "resultScreeen.dialog.description": "Velg hvilke deler av testen du vil ta på nytt?",
   "resultScreeen.dialog.checkbox.withoutPlugs": "Uten ørepropper",
   "resultScreeen.dialog.checkbox.withPlugs": "Med ørepropper",
+  "feedbackScreen.title": "Vi setter pris på din tilbakemelding",
+  "feedbackScreen.helpUsImprove": "Hjelp oss forbedre din opplevelse!",
+  "feedbackScreen.doYouWantToGiveUsARating": "Vil du gi oss en vurdering av din opplevelse?",
+  "feedbackScreen.howCanWeImprove": "Hvordan kan vi forbedre appen?",
+  "feedbackScreen.improvementSuggestions": "Forslag til forbedringer",
+  "feedbackScreen.sendFeedback": "Send tilbakemelding",
+  "feedbackScreen.skip": "Hopp over",
+  "feedback.thankYou": "Takk for tilbakemeldingen!",
   "exitDialog.title": "Er du sikker på at du vil avslutte testen?",
   "exitDialog.description": "Hvis du avslutter testen, mister du all progresjon",
   "exitDialog.confirm": "Avslutt test",
-  "exitDialog.cancel": "Jeg ombestemte meg"
+  "exitDialog.cancel": "Jeg ombestemte meg",
+  "keyboard.done": "Ferdig"
 }

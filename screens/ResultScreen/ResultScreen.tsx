@@ -84,7 +84,7 @@ export const ResultScreen = () => {
             title={dictionary["resultScreen.button.done"]}
             onPress={() => {
               resetTestPlan("full");
-              navigate("WelcomeScreen");
+              navigate("FeedbackScreen");
             }}
           />
         </View>

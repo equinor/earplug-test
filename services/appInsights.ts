@@ -25,3 +25,19 @@ export const trackResults = (
   );
   void appInsights.flush();
 };
+
+export const submitFeedback = (
+  rating: number | undefined,
+  improvementText: string | undefined,
+) => {
+  appInsights.trackEvent(
+    {
+      name: "Feedback",
+    },
+    {
+      rating,
+      improvementText,
+    },
+  );
+  void appInsights.flush();
+};
