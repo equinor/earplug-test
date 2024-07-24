@@ -18,6 +18,7 @@ export type FeedbackContextType = {
   setImprovementText: (text: string) => void;
   isTextFieldFocused: boolean;
   setIsTextFieldFocused: Dispatch<SetStateAction<boolean>>;
+  reset: () => void;
   submit: () => void;
 };
 
@@ -32,6 +33,7 @@ const initialState = {
   setImprovementText: noProviderErrorFn,
   isTextFieldFocused: false,
   setIsTextFieldFocused: noProviderErrorFn,
+  reset: noProviderErrorFn,
   submit: noProviderErrorFn,
 };
 
@@ -51,19 +53,24 @@ export const FeedbackProvider = ({ children }: PropsWithChildren) => {
     [setRatingInternal],
   );
 
+  const reset = useCallback(() => {
+    setRatingInternal(undefined);
+    setImprovementText(undefined);
+    setIsTextFieldFocused(false);
+  }, []);
+
   const submit = useCallback(() => {
     let improvementTextToSubmit: string | undefined = improvementText;
     if (improvementText?.trim() === "") {
       improvementTextToSubmit = undefined;
     }
     submitFeedback(rating, improvementTextToSubmit);
-    setRatingInternal(undefined);
-    setImprovementText(undefined);
+    reset();
     addToast({
       type: "success",
       text: dictionary["feedback.thankYou"],
     });
-  }, [improvementText, rating, dictionary]);
+  }, [improvementText, rating, dictionary, reset]);
 
   return (
     <FeedbackContext.Provider
@@ -74,6 +81,7 @@ export const FeedbackProvider = ({ children }: PropsWithChildren) => {
         setImprovementText,
         isTextFieldFocused,
         setIsTextFieldFocused,
+        reset,
         submit,
       }}
     >
