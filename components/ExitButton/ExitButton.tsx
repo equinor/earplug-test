@@ -26,7 +26,7 @@ export const ExitButton = (props: ExitButtonProps) => {
         {
           text: dictionary["exitDialog.confirm"],
           onPress: () => {
-            resetTestPlan();
+            resetTestPlan("full");
             navigation.navigate("WelcomeScreen");
           },
           style: "destructive",
