@@ -9,12 +9,17 @@ export const NavigationButtons = () => {
   const styles = useFeedbackStyles();
   const dictionary = useDictionary();
   const navigation = useAttenuationAppNavigation();
-  const { improvementText, rating, submit } = useFeedback();
+  const { improvementText, rating, reset, submit } = useFeedback();
 
   const navigate = () => navigation.navigate("WelcomeScreen");
 
   const onPressSubmit = () => {
     submit();
+    navigate();
+  };
+
+  const onPressSkip = () => {
+    reset();
     navigate();
   };
 
@@ -31,7 +36,7 @@ export const NavigationButtons = () => {
       <Button
         variant="outlined"
         title={dictionary["feedbackScreen.skip"]}
-        onPress={navigate}
+        onPress={onPressSkip}
       />
     </View>
   );
