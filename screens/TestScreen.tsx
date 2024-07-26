@@ -16,13 +16,13 @@ import {
 } from "../components/VolumeButton/SoundButton";
 import { useEffect, useRef, useState } from "react";
 import { SoundButtonControls } from "../components/VolumeButton/types";
-import { Image, ScrollView, View } from "react-native";
-import soundIndicator from "../assets/sound-indicator.png";
+import { ScrollView, View } from "react-native";
 import { useDictionary } from "../language";
 import { useSystemVolume } from "../hooks/useSystemVolume";
 import { useResults } from "../contexts/ResultsContext";
 import { Title } from "../components/Title";
 import Rive from "rive-react-native";
+import { BIG_ROUND_BUTTON_DIAMETER } from "../components/VolumeButton/constants";
 
 export const TestScreen = () => {
   const styles = useStyles(themeStyles);
@@ -67,7 +67,7 @@ export const TestScreen = () => {
 
   const TestDescription = () => {
     if (type === TEST_PLAN_PAGE_TYPES.TEST && isVolumePage) {
-      return <Image source={soundIndicator} />;
+      return <Rive resourceName="sound-waves" style={styles.soundWaves} />;
     }
 
     if (type === TEST_PLAN_PAGE_TYPES.TEST && !isVolumePage) {
@@ -179,6 +179,9 @@ const themeStyles = EDSStyleSheet.create((theme) => ({
   },
   insertEarplugs: {
     width: "100%",
+  },
+  soundWaves: {
+    width: BIG_ROUND_BUTTON_DIAMETER,
   },
   bottomSection: {
     justifyContent: "center",
