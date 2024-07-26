@@ -22,6 +22,7 @@ import { useDictionary } from "../language";
 import { useSystemVolume } from "../hooks/useSystemVolume";
 import { useResults } from "../contexts/ResultsContext";
 import { Title } from "../components/Title";
+import Rive from "rive-react-native";
 
 export const TestScreen = () => {
   const styles = useStyles(themeStyles);
@@ -135,9 +136,15 @@ export const TestScreen = () => {
               ) : type === TEST_PLAN_PAGE_TYPES.TEST && !isSoundLoaded ? (
                 <CircularProgress />
               ) : (
-                <Typography style={{ textAlign: "center" }}>
-                  Placeholder for test with plugs info
-                </Typography>
+                <>
+                  <Typography style={{ textAlign: "center" }}>
+                    {dictionary["testScreen.description.insertEarplugs"]}
+                  </Typography>
+                  <Rive
+                    resourceName="insert-earplugs"
+                    style={styles.insertEarplugs}
+                  />
+                </>
               )}
             </View>
           </View>
@@ -169,6 +176,9 @@ const themeStyles = EDSStyleSheet.create((theme) => ({
     paddingBottom: 48,
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  insertEarplugs: {
+    width: "100%",
   },
   bottomSection: {
     justifyContent: "center",

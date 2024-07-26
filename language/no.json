@@ -15,6 +15,7 @@
   "testScreen.title.withPlug.leftEar": "Lydtest venstre øre med propper",
   "testScreen.title.withPlug.rightEar": "Lydtest høyre øre med propper",
   "testScreen.title.adjustVolume": "Juster lydvolumet sakte til du akkurat kan høre tonen",
+  "testScreen.description.insertEarplugs": "Sett inn begge proppene og klikk 'fortsett' for å gå videre",
   "testScreen.testDescription": "Sett headesettet på og klikk 'spill av' for å starte lydtesten",
   "testScreen.button.confirmVolume": "Bekreft volum",
   "testScreen.button.continue": "Fortsett",
