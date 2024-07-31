@@ -1,17 +1,20 @@
-import { EDSProvider, useEDS } from "@equinor/mad-components";
+import { EDSProvider } from "@equinor/mad-components";
+import { ToastEmitter } from "@equinor/mad-toast";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { DoneButtonInputAccessoryView } from "./components/DoneButtonInputAccessoryView";
+import { useCachedResources } from "./hooks/useCachedResources";
 import { useColorScheme } from "./hooks/useColorScheme";
+import { useLockScreenOrientation } from "./hooks/useLockScreenOrientation";
 import { Navigation } from "./navigation";
 import { getEDSDensity } from "./utils/getEDSDensity";
-import { useLockScreenOrientation } from "./hooks/useLockScreenOrientation";
-import { DoneButtonInputAccessoryView } from "./components/DoneButtonInputAccessoryView";
-import { ToastEmitter } from "@equinor/mad-toast";
 
 export default function App() {
   const colorScheme = useColorScheme();
-  const [hasLoadedEDS] = useEDS();
+  const isLoadingComplete = useCachedResources();
   useLockScreenOrientation();
-  if (!hasLoadedEDS) return null;
+
+  if (!isLoadingComplete) return null;
+
   return (
     <SafeAreaProvider>
       <EDSProvider colorScheme={colorScheme} density={getEDSDensity()}>
