@@ -178,7 +178,7 @@ const themeStyles = EDSStyleSheet.create((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  insertEarplugs: { width: "70%" },
+  insertEarplugs: { width: "60%" },
   bottomSection: {
     justifyContent: "center",
     alignItems: "center",
