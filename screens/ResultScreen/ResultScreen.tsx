@@ -23,6 +23,7 @@ import { Bar, BAR_HEIGHT } from "./Bar";
 import { Title } from "../../components/Title";
 import { Description } from "./Description";
 import { Subtitle } from "./Subtitle";
+import { useTrackResults } from "../../hooks/useTrackResults";
 
 export const ResultScreen = () => {
   const [isTestAgainDialogOpen, setIsTestAgainDialogOpen] = useState(false);
@@ -30,6 +31,7 @@ export const ResultScreen = () => {
   const { resetTestPlan } = useTestPlan();
   const { navigate } = useAttenuationAppNavigation();
   const {
+    earVolumeResults,
     decibelDifferenceResult,
     isAttenuationApproved,
     isAttenuationApprovedLeftEar,
@@ -42,6 +44,8 @@ export const ResultScreen = () => {
     isAttenuationApprovedRightEar,
   });
   const dictionary = useDictionary();
+
+  useTrackResults(earVolumeResults, decibelDifferenceResult);
 
   return (
     <SafeAreaView style={styles.container}>
