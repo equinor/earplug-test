@@ -30,20 +30,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font",
-      [
-        "expo-build-properties",
-        {
-          "ios": {
-            "deploymentTarget": "14.0"
-          }
-        }
-      ],
-      ["expo-custom-assets", 
-        {
-          "assetsPaths": ["./assets/animations/"]
-        }
-      ]
+      "expo-font"
     ]
   }
 }
