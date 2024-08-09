@@ -22,7 +22,7 @@ import { useDictionary } from "../language";
 import { useSystemVolume } from "../hooks/useSystemVolume";
 import { useResults } from "../contexts/ResultsContext";
 import { Title } from "../components/Title";
-import Rive from "rive-react-native";
+import insertEarplugs from "../assets/insert-earplugs.png";
 
 export const TestScreen = () => {
   const styles = useStyles(themeStyles);
@@ -140,8 +140,9 @@ export const TestScreen = () => {
                   <Typography style={{ textAlign: "center" }}>
                     {dictionary["testScreen.description.insertEarplugs"]}
                   </Typography>
-                  <Rive
-                    resourceName="insert-earplugs"
+                  <Image
+                    source={insertEarplugs}
+                    resizeMode="contain"
                     style={styles.insertEarplugs}
                   />
                 </>
@@ -177,9 +178,7 @@ const themeStyles = EDSStyleSheet.create((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  insertEarplugs: {
-    width: "100%",
-  },
+  insertEarplugs: { width: "60%" },
   bottomSection: {
     justifyContent: "center",
     alignItems: "center",
