@@ -7,22 +7,26 @@ import {
   useStyles,
 } from "@equinor/mad-components";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ExitButton } from "../components/ExitButton/ExitButton";
-import { TEST_PLAN_PAGE_TYPES, useTestPlan } from "../contexts/TestPlanContext";
-import { useSound } from "../hooks/useSound";
+import { ExitButton } from "../../components/ExitButton/ExitButton";
+import {
+  TEST_PLAN_PAGE_TYPES,
+  useTestPlan,
+} from "../../contexts/TestPlanContext";
+import { useSound } from "../../hooks/useSound";
 import {
   SoundButton,
   SoundButtonProps,
-} from "../components/VolumeButton/SoundButton";
+} from "../../components/VolumeButton/SoundButton";
 import { useEffect, useRef, useState } from "react";
-import { SoundButtonControls } from "../components/VolumeButton/types";
+import { SoundButtonControls } from "../../components/VolumeButton/types";
 import { Image, ScrollView, View } from "react-native";
-import soundIndicator from "../assets/sound-indicator.png";
-import { useDictionary } from "../language";
-import { useSystemVolume } from "../hooks/useSystemVolume";
-import { useResults } from "../contexts/ResultsContext";
-import { Title } from "../components/Title";
-import insertEarplugs from "../assets/insert-earplugs.png";
+import soundIndicator from "../../assets/sound-indicator.png";
+import { useDictionary } from "../../language";
+import { useSystemVolume } from "../../hooks/useSystemVolume";
+import { useResults } from "../../contexts/ResultsContext";
+import { Title } from "../../components/Title";
+import insertEarplugs from "../../assets/insert-earplugs.png";
+import { InsertEarplugsDescription } from "./InsertEarplugsDescription";
 
 export const TestScreen = () => {
   const styles = useStyles(themeStyles);
@@ -137,9 +141,7 @@ export const TestScreen = () => {
                 <CircularProgress />
               ) : (
                 <>
-                  <Typography style={{ textAlign: "center" }}>
-                    {dictionary["testScreen.description.insertEarplugs"]}
-                  </Typography>
+                  <InsertEarplugsDescription />
                   <Image
                     source={insertEarplugs}
                     resizeMode="contain"
