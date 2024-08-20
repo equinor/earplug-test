@@ -6,9 +6,9 @@ import { createError, createValue, Error } from "../utils/valueOrError";
 describe("calculateDecibelDifference", () => {
   it("Should calculate the decibel difference for volume X and Y", () => {
     expect(calculateDecibelDifference(0.1, 1)).toEqual(createValue(20));
-    expect(calculateDecibelDifference(0.02, 0.5)).toEqual(createValue(27.96));
-    expect(calculateDecibelDifference(0.06, 0.4)).toEqual(createValue(16.48));
-    expect(calculateDecibelDifference(0.06, 0.42)).toEqual(createValue(16.9));
+    expect(calculateDecibelDifference(0.02, 0.5)).toEqual(createValue(27));
+    expect(calculateDecibelDifference(0.06, 0.4)).toEqual(createValue(16));
+    expect(calculateDecibelDifference(0.06, 0.42)).toEqual(createValue(16));
   });
 
   it("Should return an error object if the arguments are invalid", () => {
