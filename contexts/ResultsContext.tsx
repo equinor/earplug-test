@@ -15,6 +15,7 @@ import {
 } from "./_internal/types";
 import { useDecibelDifference } from "./_internal/useDecibelDifference";
 import { getIsAttenuationApprovedForEar } from "./_internal/getIsAttenuationApprovedForEar";
+import { useFlooredDecibelDifferenceResult } from "./_internal/useFlooredDecibelDifferenceResult";
 
 export type ResultsContextType = {
   isAttenuationApproved: boolean;
@@ -24,6 +25,7 @@ export type ResultsContextType = {
   setEarVolumeResult: (ear: Ear, type: EarResultKey, value: number) => void;
   reset: () => void;
   decibelDifferenceResult: DecibelDifferenceResult;
+  flooredDecibelDifferenceResult: DecibelDifferenceResult;
 };
 
 const initialValue: EarVolumeResults = {
@@ -52,6 +54,10 @@ const ResultsContext = createContext<ResultsContextType>({
     left: createError("VOLUME_RESULTS_MISSING"),
     right: createError("VOLUME_RESULTS_MISSING"),
   },
+  flooredDecibelDifferenceResult: {
+    left: createError("VOLUME_RESULTS_MISSING"),
+    right: createError("VOLUME_RESULTS_MISSING"),
+  },
 });
 
 export const ResultsProvider = ({ children }: PropsWithChildren) => {
@@ -69,6 +75,9 @@ export const ResultsProvider = ({ children }: PropsWithChildren) => {
     });
   };
   const { decibelDifferenceResult } = useDecibelDifference(earVolumeResults);
+  const { flooredDecibelDifferenceResult } = useFlooredDecibelDifferenceResult(
+    decibelDifferenceResult,
+  );
   const isAttenuationApprovedLeftEar = useMemo(() => {
     return getIsAttenuationApprovedForEar(decibelDifferenceResult.left);
   }, [decibelDifferenceResult]);
@@ -90,6 +99,7 @@ export const ResultsProvider = ({ children }: PropsWithChildren) => {
         setEarVolumeResult,
         reset,
         decibelDifferenceResult,
+        flooredDecibelDifferenceResult,
       }}
     >
       {children}

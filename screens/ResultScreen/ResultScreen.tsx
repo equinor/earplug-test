@@ -33,16 +33,12 @@ export const ResultScreen = () => {
   const {
     earVolumeResults,
     decibelDifferenceResult,
+    flooredDecibelDifferenceResult,
     isAttenuationApproved,
     isAttenuationApprovedLeftEar,
     isAttenuationApprovedRightEar,
   } = useResults();
-  const styles = useStyles(themeStyles, {
-    decibelDifferenceResult,
-    isAttenuationApproved,
-    isAttenuationApprovedLeftEar,
-    isAttenuationApprovedRightEar,
-  });
+  const styles = useStyles(themeStyles);
   const dictionary = useDictionary();
 
   useTrackResults(earVolumeResults, decibelDifferenceResult);
@@ -61,12 +57,16 @@ export const ResultScreen = () => {
             <View style={styles.lowerDbThreshold} />
             <View style={styles.chartContainer}>
               <Bar
-                calculateDecibelDifferenceResult={decibelDifferenceResult.left}
+                calculateDecibelDifferenceResult={
+                  flooredDecibelDifferenceResult.left
+                }
                 isAttenuationApprovedForEar={isAttenuationApprovedLeftEar}
                 label={dictionary["resultScreen.chart.label.left"]}
               />
               <Bar
-                calculateDecibelDifferenceResult={decibelDifferenceResult.right}
+                calculateDecibelDifferenceResult={
+                  flooredDecibelDifferenceResult.right
+                }
                 isAttenuationApprovedForEar={isAttenuationApprovedRightEar}
                 label={dictionary["resultScreen.chart.label.right"]}
               />
