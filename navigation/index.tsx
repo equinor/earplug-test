@@ -5,7 +5,7 @@ import { ColorSchemeName } from "react-native";
 import { ResultsProvider } from "../contexts/ResultsContext";
 import { TestPlanProvider } from "../contexts/TestPlanContext";
 import { ResultScreen } from "../screens/ResultScreen/ResultScreen";
-import { TestScreen } from "../screens/TestScreen";
+import { TestScreen } from "../screens/TestScreen/TestScreen";
 import { WelcomeScreen } from "../screens/WelcomeScreen";
 import { RootStackParamList } from "./types";
 import { FeedbackScreen } from "../screens/FeedbackScreen/FeedbackScreen";
