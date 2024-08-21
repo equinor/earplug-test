@@ -11,15 +11,28 @@ import { useDictionary } from "../language";
 import { useAttenuationAppNavigation } from "../navigation/useAttenuationAppNavigation";
 import { openEarPlugInstructionsURL } from "../utils/openEarPlugInstructionsURL";
 import { Title } from "../components/Title";
+import SystemSetting from "react-native-system-setting";
+import { SYSTEM_VOLUME } from "../constants/sounds";
+import { useState } from "react";
 
 export const WelcomeScreen = () => {
   const styles = useStyles(themeStyles);
   const { navigate } = useAttenuationAppNavigation();
   const dictionary = useDictionary();
+  const [systemVolume, setSystemVolume] = useState(SYSTEM_VOLUME);
+
+  const onPressUpdateSystemVolume = () => {
+    void SystemSetting.getVolume().then((volume) => setSystemVolume(volume));
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <Title>{dictionary["welcomeScreen.title"]}</Title>
+      <Button
+        title="Update system volume"
+        onPress={onPressUpdateSystemVolume}
+      />
+      <Typography>{`System volume: ${systemVolume}`}</Typography>
       <Typography
         group="paragraph"
         variant="body_short"
