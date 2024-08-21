@@ -7,6 +7,7 @@ export const Description = () => {
   const dictionary = useDictionary();
   const {
     decibelDifferenceResult,
+    flooredDecibelDifferenceResult,
     isAttenuationApproved,
     isAttenuationApprovedLeftEar,
     isAttenuationApprovedRightEar,
@@ -31,10 +32,10 @@ export const Description = () => {
       <Typography
         bold
         style={styles.leftEar}
-      >{`${unwrap(decibelDifferenceResult.left)} dB ${dictionary["resultScreen.description.leftEar"]}`}</Typography>{" "}
+      >{`${unwrap(flooredDecibelDifferenceResult.left)} dB ${dictionary["resultScreen.description.leftEar"]}`}</Typography>{" "}
       &{" "}
       <Typography bold style={styles.rightEar}>
-        {`${unwrap(decibelDifferenceResult.right)} dB ${dictionary["resultScreen.description.rightEar"]}`}
+        {`${unwrap(flooredDecibelDifferenceResult.right)} dB ${dictionary["resultScreen.description.rightEar"]}`}
       </Typography>
       .{" "}
       {isAttenuationApproved
