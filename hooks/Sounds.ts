@@ -76,14 +76,18 @@ export class Sounds {
     return this.sound.getVolume() * Math.pow(10, dbIncrement / 20);
   };
 
+  private shouldEnableFineTuneMode = (upOrDown: UpOrDown) => {
+    if (this.isFineTuneMode) return false;
+    if (this.firstVolumeAdjustmentUpOrDown === null) return false;
+    if (upOrDown === this.firstVolumeAdjustmentUpOrDown) return false;
+    return true;
+  };
+
   public adjustVolume = (upOrDown: UpOrDown) => {
     if (this.firstVolumeAdjustmentUpOrDown === null) {
       this.firstVolumeAdjustmentUpOrDown = upOrDown;
     }
-    if (
-      !this.isFineTuneMode &&
-      upOrDown !== this.firstVolumeAdjustmentUpOrDown
-    ) {
+    if (this.shouldEnableFineTuneMode(upOrDown)) {
       this.isFineTuneMode = true;
     }
 
