@@ -1,12 +1,20 @@
 import Sound from "react-native-sound";
 import testSound from "../assets/audio/500Hz_Dobbelpip.wav";
 import { Ear } from "../types";
+import {
+  VOLUME_DB_INCREMENT_BIG,
+  VOLUME_DB_INCREMENT_SMALL,
+} from "../constants/sounds";
+
+type UpOrDown = "up" | "down";
 
 export class Sounds {
-  private sound: Sound;
+  public sound: Sound;
   private intervalId: NodeJS.Timeout | null;
   private onSoundCreateAndLoad: () => void;
   private onSoundStopAndRelease: () => void;
+  private isFineTuneMode: boolean;
+  private firstVolumeAdjustmentUpOrDown: UpOrDown | null;
 
   constructor(
     onSoundCreateAndLoad: () => void,
@@ -16,6 +24,8 @@ export class Sounds {
     this.intervalId = null;
     this.onSoundCreateAndLoad = onSoundCreateAndLoad;
     this.onSoundStopAndRelease = onSoundStopAndRelease;
+    this.isFineTuneMode = false;
+    this.firstVolumeAdjustmentUpOrDown = null;
   }
 
   private onSoundsLoaded = (error: unknown) => {
@@ -50,6 +60,48 @@ export class Sounds {
     this.intervalId = setInterval(() => {
       this.sound.play();
     }, 1500);
+  };
+
+  private calculateNewVolume = (upOrDown: UpOrDown) => {
+    let dbIncrement = 0;
+    const dbIncrementSize = this.isFineTuneMode
+      ? VOLUME_DB_INCREMENT_SMALL
+      : VOLUME_DB_INCREMENT_BIG;
+
+    if (upOrDown === "up") {
+      dbIncrement += dbIncrementSize;
+    } else {
+      dbIncrement -= dbIncrementSize;
+    }
+    return this.sound.getVolume() * Math.pow(10, dbIncrement / 20);
+  };
+
+  public adjustVolume = (upOrDown: UpOrDown) => {
+    if (this.firstVolumeAdjustmentUpOrDown === null) {
+      this.firstVolumeAdjustmentUpOrDown = upOrDown;
+    }
+    if (
+      !this.isFineTuneMode &&
+      this.firstVolumeAdjustmentUpOrDown !== null &&
+      upOrDown !== this.firstVolumeAdjustmentUpOrDown
+    ) {
+      this.isFineTuneMode = true;
+    }
+
+    let newVolume = this.calculateNewVolume(upOrDown);
+    if (newVolume > 1) {
+      newVolume = 1;
+    }
+    if (newVolume < 0) {
+      newVolume = 0;
+    }
+    this.sound.setVolume(newVolume);
+  };
+
+  public resetSoundPlayback = () => {
+    this.sound.setVolume(1);
+    this.isFineTuneMode = false;
+    this.firstVolumeAdjustmentUpOrDown = null;
   };
 
   public stop = () => {
