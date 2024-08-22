@@ -82,7 +82,6 @@ export class Sounds {
     }
     if (
       !this.isFineTuneMode &&
-      this.firstVolumeAdjustmentUpOrDown !== null &&
       upOrDown !== this.firstVolumeAdjustmentUpOrDown
     ) {
       this.isFineTuneMode = true;
