@@ -73,7 +73,15 @@ export class Sounds {
     } else {
       dbIncrement -= dbIncrementSize;
     }
-    return this.sound.getVolume() * Math.pow(10, dbIncrement / 20);
+
+    let newVolume = this.sound.getVolume() * Math.pow(10, dbIncrement / 20);
+    if (newVolume > 1) {
+      newVolume = 1;
+    }
+    if (newVolume < 0) {
+      newVolume = 0;
+    }
+    return newVolume;
   };
 
   private shouldEnableFineTuneMode = (upOrDown: UpOrDown) => {
@@ -90,15 +98,7 @@ export class Sounds {
     if (this.shouldEnableFineTuneMode(upOrDown)) {
       this.isFineTuneMode = true;
     }
-
-    let newVolume = this.calculateNewVolume(upOrDown);
-    if (newVolume > 1) {
-      newVolume = 1;
-    }
-    if (newVolume < 0) {
-      newVolume = 0;
-    }
-    this.sound.setVolume(newVolume);
+    this.sound.setVolume(this.calculateNewVolume(upOrDown));
   };
 
   public resetSoundPlayback = () => {
