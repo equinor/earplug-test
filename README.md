@@ -1,4 +1,21 @@
-# Attenuation app
+# Earplug Test/Dempings app
+
+#### Operational Status
+[CI in ServiceNow](https://equinor.service-now.com/nav_to.do?uri=cmdb_ci_spkg.do?sys_id=31ec3a7633870290a3c5ab223d5c7b31)
+
+# Description of the app
+
+Earplug Test/Dempings app is fulfilling this business purpose: This software/attenuation app will provide a better fit-testing system for hearing protection (earplugs) in noisy working environments. Ensuring that hearing protection has the intended effect will prevent work-related hearing loss (WRIs). This system will enable Equinor to verify the effectiveness of its noise barriers, as requested by Havtil. The application has no integration to any Equinor-managed application.
+
+Contact operational unit for access.
+
+## Project Status
+
+This project is actively developed by the [DSD Mobile Team](https://github.com/orgs/equinor/teams/dsd-mobile/). New features are being implemented based on their prioritisation with Product Owners and User Representives.
+
+## Internal Documentation
+
+In progress
 
 ## Development
 
