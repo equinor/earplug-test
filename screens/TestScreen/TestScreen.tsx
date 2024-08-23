@@ -17,7 +17,7 @@ import {
   SoundButton,
   SoundButtonProps,
 } from "../../components/VolumeButton/SoundButton";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { SoundButtonControls } from "../../components/VolumeButton/types";
 import { Image, ScrollView, View } from "react-native";
 import soundIndicator from "../../assets/sound-indicator.png";
@@ -40,17 +40,8 @@ export const TestScreen = () => {
   const soundButtonRef = useRef<SoundButtonControls>(null);
   const [isVolumePage, setIsVolumePage] = useState(false);
   const dictionary = useDictionary();
-  const {
-    decreaseSystemVolume,
-    increaseSystemVolume,
-    resetSystemVolume,
-    systemVolume,
-  } = useSystemVolume();
+  useSystemVolume();
   const { setEarVolumeResult: setResult } = useResults();
-
-  useEffect(() => {
-    resetSystemVolume();
-  }, [resetSystemVolume]);
 
   const onPress: SoundButtonProps["onPress"] = (e) => {
     if (e.type === "play" && ear) {
@@ -61,11 +52,11 @@ export const TestScreen = () => {
     }
 
     if (e.type === "volume" && e.variant === "+") {
-      increaseSystemVolume();
+      Sound.adjustVolume("up");
     }
 
     if (e.type === "volume" && e.variant === "-") {
-      decreaseSystemVolume();
+      Sound.adjustVolume("down");
     }
   };
 
@@ -96,9 +87,9 @@ export const TestScreen = () => {
               setResult(
                 ear,
                 withPlug ? "withPlugs" : "withoutPlugs",
-                systemVolume,
+                Sound.sound.getVolume(),
               );
-              resetSystemVolume();
+              Sound.resetSoundPlayback();
               navigateNext();
             }
           }}
