@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "attenuation app",
-    "slug": "attenuation-app",
+    "name": "Earplug Test",
+    "slug": "earplug-test",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
