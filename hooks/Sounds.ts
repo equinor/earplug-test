@@ -1,5 +1,5 @@
 import Sound from "react-native-sound";
-import testSound from "../assets/audio/500Hz_Dobbelpip.wav";
+import testSound from "../assets/audio/500Hz_Dobbelpip_750msPause.wav";
 import { Ear } from "../types";
 import {
   VOLUME_DB_INCREMENT_BIG,
@@ -59,7 +59,7 @@ export class Sounds {
     this.sound.setPan(ear === "left" ? -1 : 1);
     this.intervalId = setInterval(() => {
       this.sound.play();
-    }, 1500);
+    }, 750);
   };
 
   private calculateNewVolume = (upOrDown: UpOrDown) => {
