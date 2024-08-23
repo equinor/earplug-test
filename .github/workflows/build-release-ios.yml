@@ -121,8 +121,8 @@ jobs:
                 configuration: ${{inputs.environment}}
                 platform: iOS
                 action: build
-                workspace: ios/attenuationapp.xcworkspace
-                scheme: attenuationapp
+                workspace: ios/EarplugTest.xcworkspace
+                scheme: EarplugTest
                 mobile-provisioning-profiles-base64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
                 code-sign-certificate: ${{ secrets.P12SECRET }}
                 code-sign-certificate-passphrase: ${{ secrets.P12PASSWORD }}
@@ -130,24 +130,24 @@ jobs:
 
            - name: Xcode Archive Build
              run: |  
-              /usr/bin/xcodebuild archive -workspace ios/attenuationapp.xcworkspace -scheme attenuationapp -destination 'generic/platform=iOS' -archivePath build/attenuationapp.xcarchive CODE_SIGN_STYLE="Manual" CODE_SIGN_IDENTITY="${{env.CODE_SIGN_IDENTITY}}" PROVISIONING_PROFILE="${{env.UUID}}"
+              /usr/bin/xcodebuild archive -workspace ios/EarplugTest.xcworkspace -scheme EarplugTest -destination 'generic/platform=iOS' -archivePath build/EarplugTest.xcarchive CODE_SIGN_STYLE="Manual" CODE_SIGN_IDENTITY="${{env.CODE_SIGN_IDENTITY}}" PROVISIONING_PROFILE="${{env.UUID}}"
           
            - name: Export IPA
              run: |
-               /usr/bin/xcodebuild -exportArchive -archivePath build/attenuationapp.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath build    
+               /usr/bin/xcodebuild -exportArchive -archivePath build/EarplugTest.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath build    
 
            - name: Upload IPA Artifact
              uses: actions/upload-artifact@v2
              with:
                name: Attenuationapp
-               path: build/attenuationapp.ipa
+               path: build/EarplugTest.ipa
 
            - name: Upload to TestFlight
              run: |
                mkdir -p ./private_keys
                echo -n "${{secrets.APPSTORE_API_PRIVATE_KEY}}" | base64 --decode -o "./private_keys/AuthKey_${{ secrets.APPSTORE_API_KEY_ID }}.p8"
-               xcrun altool --validate-app -f /Users/runner/work/attenuation-app/attenuation-app/build/attenuationapp.ipa -t ios --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }}
-               xcrun altool --upload-app -f /Users/runner/work/attenuation-app/attenuation-app/build/attenuationapp.ipa -t ios --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }}
+               xcrun altool --validate-app -f /Users/runner/work/earplug-test/earplug-test/build/EarplugTest.ipa -t ios --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }}
+               xcrun altool --upload-app -f /Users/runner/work/earplug-test/earplug-test/build/EarplugTest.ipa -t ios --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }}
 
 
                

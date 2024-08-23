@@ -15,6 +15,6 @@ jobs:
         if:
             ${{ !startsWith(github.event.head_commit.message, 'docs')  && !startsWith(github.event.head_commit.message, 'style') && !startswith(github.event.head_commit.message, 'refactor') }}
         secrets: inherit
-        uses: equinor/attenuation-app/.github/workflows/build-release-ios.yml@main
+        uses: equinor/earplug-test/.github/workflows/build-release-ios.yml@main
         with:
             environment: Prod
