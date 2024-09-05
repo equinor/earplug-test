@@ -19,6 +19,8 @@
   "testScreen.description.insertEarplugsTwo": "begge",
   "testScreen.description.insertEarplugsThree": "proppene og klikk 'fortsett' for å gå videre",
   "testScreen.testDescription": "Sett headesettet på og klikk 'spill av' for å starte lydtesten",
+  "testScreen.fineTuneMode.enabled": "Nå finjusteres lydnivået. Lyden vil endres med små trinn for hvert trykk.",
+  "testScreen.fineTuneMode.disabled": "Nå grovjusteres lydnivået",
   "testScreen.button.confirmVolume": "Bekreft volum",
   "testScreen.button.continue": "Fortsett",
   "resultScreen.title": "Resultater",

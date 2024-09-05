@@ -29,19 +29,19 @@ import insertEarplugs from "../../assets/insert-earplugs.png";
 import { InsertEarplugsDescription } from "./InsertEarplugsDescription";
 
 export const TestScreen = () => {
-  const styles = useStyles(themeStyles);
   const {
     current: { title, type, ear, withPlug },
     increaseProgress,
     navigateNext,
     progress,
   } = useTestPlan();
-  const { isSoundLoaded, Sound } = useSound();
+  const { isFineTuneMode, isSoundLoaded, Sound } = useSound();
   const soundButtonRef = useRef<SoundButtonControls>(null);
   const [isVolumePage, setIsVolumePage] = useState(false);
   const dictionary = useDictionary();
   useSystemVolume();
   const { setEarVolumeResult: setResult } = useResults();
+  const styles = useStyles(themeStyles, { isVolumePage });
 
   const onPress: SoundButtonProps["onPress"] = (e) => {
     if (e.type === "play" && ear) {
@@ -126,7 +126,14 @@ export const TestScreen = () => {
               {type === TEST_PLAN_PAGE_TYPES.TEST && isSoundLoaded ? (
                 <>
                   <TestDescription />
-                  <SoundButton ref={soundButtonRef} onPress={onPress} />
+                  <View style={styles.buttonDescriptionAndButtonContainer}>
+                    <Typography style={styles.buttonDescription}>
+                      {isFineTuneMode
+                        ? dictionary["testScreen.fineTuneMode.enabled"]
+                        : dictionary["testScreen.fineTuneMode.disabled"]}
+                    </Typography>
+                    <SoundButton ref={soundButtonRef} onPress={onPress} />
+                  </View>
                 </>
               ) : type === TEST_PLAN_PAGE_TYPES.TEST && !isSoundLoaded ? (
                 <CircularProgress />
@@ -151,7 +158,9 @@ export const TestScreen = () => {
   );
 };
 
-const themeStyles = EDSStyleSheet.create((theme) => ({
+type ThemeStylesProps = { isVolumePage: boolean };
+
+const themeStyles = EDSStyleSheet.create((theme, props: ThemeStylesProps) => ({
   container: {
     flex: 1,
     paddingHorizontal: theme.spacing.container.paddingHorizontal,
@@ -170,6 +179,11 @@ const themeStyles = EDSStyleSheet.create((theme) => ({
     paddingBottom: 48,
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  buttonDescriptionAndButtonContainer: { alignItems: "center", gap: 16 },
+  buttonDescription: {
+    textAlign: "center",
+    opacity: props.isVolumePage ? 1 : 0,
   },
   insertEarplugs: { width: "60%" },
   bottomSection: {
