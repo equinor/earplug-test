@@ -13,17 +13,20 @@ export class Sounds {
   private intervalId: NodeJS.Timeout | null;
   private onSoundCreateAndLoad: () => void;
   private onSoundStopAndRelease: () => void;
+  private onChangeFineTuneMode: (bool: boolean) => void;
   private isFineTuneMode: boolean;
   private firstVolumeAdjustmentUpOrDown: UpOrDown | null;
 
   constructor(
     onSoundCreateAndLoad: () => void,
     onSoundStopAndRelease: () => void,
+    onChangeFineTuneMode: (bool: boolean) => void,
   ) {
     this.sound = new Sound(testSound, this.onSoundsLoaded);
     this.intervalId = null;
     this.onSoundCreateAndLoad = onSoundCreateAndLoad;
     this.onSoundStopAndRelease = onSoundStopAndRelease;
+    this.onChangeFineTuneMode = onChangeFineTuneMode;
     this.isFineTuneMode = false;
     this.firstVolumeAdjustmentUpOrDown = null;
   }
@@ -96,14 +99,14 @@ export class Sounds {
       this.firstVolumeAdjustmentUpOrDown = upOrDown;
     }
     if (this.shouldEnableFineTuneMode(upOrDown)) {
-      this.isFineTuneMode = true;
+      this.setIsFineTuneMode(true);
     }
     this.sound.setVolume(this.calculateNewVolume(upOrDown));
   };
 
   public resetSoundPlayback = () => {
     this.sound.setVolume(1);
-    this.isFineTuneMode = false;
+    this.setIsFineTuneMode(false);
     this.firstVolumeAdjustmentUpOrDown = null;
   };
 
@@ -129,6 +132,11 @@ export class Sounds {
     this.stop();
     this.releaseSounds();
     this.onSoundStopAndRelease();
+  };
+
+  private setIsFineTuneMode = (bool: boolean) => {
+    this.isFineTuneMode = bool;
+    this.onChangeFineTuneMode(bool);
   };
 
   private initializeSoundPlayback = () => {
