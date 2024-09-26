@@ -8,8 +8,7 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   trigger-build:
-        if:
-          ${{ !startsWith(github.event.head_commit.message, 'docs')  && !startsWith(github.event.head_commit.message, 'style') && !startsWith(github.event.head_commit.message, 'refactor') }}
+    if: ${{ !startsWith(github.event.head_commit.message, 'docs')  && !startsWith(github.event.head_commit.message, 'style') && !startsWith(github.event.head_commit.message, 'refactor') }}
     secrets: inherit
     uses: equinor/earplug-test/.github/workflows/build-release-ios.yml@main
     with:
