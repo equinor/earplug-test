@@ -109,7 +109,7 @@ jobs:
           files: ./app.json
           patch-syntax: |
             = /expo/ios/buildNumber => "${{ env.BUILD_NUMBER }}"
-            = /expo/icon => "icon-${{ inputs.environment-config }}.png"
+            = /expo/icon => "./assets/icon-${{ inputs.environment-config }}.png"
 
       - name: Prebuild expo project
         run: |
