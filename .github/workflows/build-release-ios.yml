@@ -25,7 +25,7 @@ jobs:
     runs-on: macos-13
     steps:
       - name: Set build number to environment variable
-        run: echo "BUILD_NUMBER=$(date +'%Y').$(date +'%m%d').${{github.run_number}}-${{inputs.environment-config}}" >> $GITHUB_ENV
+        run: echo "BUILD_NUMBER=$(date +'%Y').$(date +'%m%d').${{github.run_number}}" >> $GITHUB_ENV
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -109,6 +109,7 @@ jobs:
           files: ./app.json
           patch-syntax: |
             = /expo/ios/buildNumber => "${{ env.BUILD_NUMBER }}"
+            = /expo/icon => "icon-${{ inputs.environment-config }}.png"
 
       - name: Prebuild expo project
         run: |
