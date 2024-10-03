@@ -5,6 +5,8 @@ import {
   DecibelDifferenceResult,
   EarVolumeResults,
 } from "../contexts/_internal/types";
+import AppInfo from "../app.json";
+import { Envelope } from "./types";
 
 const RNPlugin = new ReactNativePlugin();
 const appInsights = new ApplicationInsights({
@@ -14,6 +16,13 @@ const appInsights = new ApplicationInsights({
   },
 });
 appInsights.loadAppInsights();
+
+const appVersionEnvelope: Envelope = (item) => {
+  if (item.data) {
+    item.data["app-version"] = AppInfo.expo.version;
+  }
+};
+appInsights.addTelemetryInitializer(appVersionEnvelope);
 
 export const trackResults = (
   earVolumeResults: EarVolumeResults,
