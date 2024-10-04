@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/equinor/earplug-test/compare/v1.0.0...v1.0.1) (2024-10-04)
+
+
+### Bug Fixes
+
+* add app version to telemetry ([#89](https://github.com/equinor/earplug-test/issues/89)) ([98ccb6a](https://github.com/equinor/earplug-test/commit/98ccb6aae31645523ea1ca02808a19146453a667)), closes [#88](https://github.com/equinor/earplug-test/issues/88)
+* upgrade build action dependency ([#91](https://github.com/equinor/earplug-test/issues/91)) ([c8b0f8a](https://github.com/equinor/earplug-test/commit/c8b0f8a1f0845a87c2b84115857e295fde8c5202)), closes [#90](https://github.com/equinor/earplug-test/issues/90)
+
 ## 1.0.0 (2024-09-09)
 
 
