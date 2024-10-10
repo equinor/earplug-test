@@ -10,7 +10,7 @@ jobs:
   trigger-build:
     if: ${{ !startsWith(github.event.head_commit.message, 'docs')  && !startsWith(github.event.head_commit.message, 'style') && !startsWith(github.event.head_commit.message, 'refactor') }}
     secrets: inherit
-    uses: equinor/earplug-test/.github/workflows/build-release-ios.yml@86-add-environment-to-build-number
+    uses: equinor/earplug-test/.github/workflows/build-release-ios.yml@main
     with:
       environment: Prod
       environment-config: test
