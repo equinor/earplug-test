@@ -7,6 +7,11 @@ on:
         default: "prod"
         required: true
         type: string
+      environment-config:
+        description: "The environment config to use"
+        default: "prod"
+        required: true
+        type: string
 
 env:
   CODE_SIGN_IDENTITY: "Apple Distribution: Equinor ASA"
@@ -96,6 +101,9 @@ jobs:
           filename: "package.json"
           prefix: "PACKAGEJSON"
 
+      - name: Patch settings.json
+        run: cp "constants/env-configs/${{ inputs.environment-config }}.json" constants/settings.json
+
       - name: Patch app.json
         uses: onlyutkarsh/patch-files-action@v1.0.1
         with:
@@ -104,6 +112,7 @@ jobs:
           files: ./app.json
           patch-syntax: |
             = /expo/ios/buildNumber => "${{ env.BUILD_NUMBER }}"
+            = /expo/icon => "./assets/icon-${{ inputs.environment-config }}.png"
 
       - name: Prebuild expo project
         run: |
