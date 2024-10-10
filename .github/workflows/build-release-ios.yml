@@ -101,6 +101,9 @@ jobs:
           filename: "package.json"
           prefix: "PACKAGEJSON"
 
+      - name: Patch settings.json
+        run: cp "constants/env-configs/${{ inputs.environment-config }}.json" constants/settings.json
+
       - name: Patch app.json
         uses: onlyutkarsh/patch-files-action@v1.0.1
         with:
