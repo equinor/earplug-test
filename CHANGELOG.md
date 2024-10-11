@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.1.0](https://github.com/equinor/earplug-test/compare/v1.0.0...v1.1.0) (2024-10-10)
+## [1.1.0](https://github.com/equinor/earplug-test/compare/v1.0.0...v1.1.0) (2024-10-11)
 
 
 ### Features
