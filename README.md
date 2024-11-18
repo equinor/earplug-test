@@ -1,9 +1,12 @@
-# Earplug Test/Dempings app
+# Earplug Test
 
-#### Operational Status
+[![SCM Compliance](https://scm-compliance-api.radix.equinor.com/repos/equinor/earplug-test/badge)](https://scm-compliance-api.radix.equinor.com/repos/equinor/earplug-test/badge)
+
+## Operational Status
+
 [CI in ServiceNow](https://equinor.service-now.com/nav_to.do?uri=cmdb_ci_spkg.do?sys_id=31ec3a7633870290a3c5ab223d5c7b31)
 
-# Description of the app
+## Description
 
 Earplug Test/Dempings app is fulfilling this business purpose: This software/attenuation app will provide a better fit-testing system for hearing protection (earplugs) in noisy working environments. Ensuring that hearing protection has the intended effect will prevent work-related hearing loss (WRIs). This system will enable Equinor to verify the effectiveness of its noise barriers, as requested by Havtil. The application has no integration to any Equinor-managed application.
 
@@ -20,35 +23,43 @@ In progress
 ## Development
 
 ### Running the app locally
+
 *You need to use a Mac with Xcode installed for this to work*
 
 #### Step 1: Install packages
+
 ```shell
 npm install
 ```
 
 #### Step 2: Prebuild the project
+
 ```shell
 npm run prebuild
 ```
 
 You can also do a clean prebuild
+
 ```shell
 npm run prebuild -- --clean
 ```
 
 #### Step 3: Run the project on an iOS simulator
+
 ```shell
 npm run ios
 ```
 
 You can also select device to run it on. Your physical devices will show up if connected.
+
 ```shell
 npm run ios -- --device
 ```
 
 #### Troubleshooting
+
 expo has a tool called `expo-doctor` that can help you troubleshoot issues in the project. To use it, run:
+
 ```shell
 npm run doctor
 ```
@@ -56,6 +67,7 @@ npm run doctor
 Doing a *clean* prebuild will often solve issues.
 
 #### Further information
+
 More information about expo-cli can be found [here](https://docs.expo.dev/more/expo-cli/)
 
 ### Contributing
