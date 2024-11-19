@@ -14,7 +14,7 @@
   "testScreen.title.testWithPlugsInfo": "Lydtest med propper",
   "testScreen.title.withPlug.leftEar": "Lydtest venstre øre med propper",
   "testScreen.title.withPlug.rightEar": "Lydtest høyre øre med propper",
-  "testScreen.title.adjustVolume": "Juster lydvolumet sakte til du akkurat kan høre tonen",
+  "testScreen.title.adjustVolume": "Juster lyden ned til du ikke hører den. Juster deretter opp til du så vidt hører lyd.",
   "testScreen.description.insertEarplugsOne": "Sett inn",
   "testScreen.description.insertEarplugsTwo": "begge",
   "testScreen.description.insertEarplugsThree": "proppene og klikk 'fortsett' for å gå videre",
