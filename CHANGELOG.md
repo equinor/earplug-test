@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/equinor/earplug-test/compare/v1.1.0...v1.1.1) (2024-11-19)
+
+
+### Bug Fixes
+
+* improve test description ([#104](https://github.com/equinor/earplug-test/issues/104)) ([d013762](https://github.com/equinor/earplug-test/commit/d01376294eb22f4a19cca134918e79c5deb91987)), closes [#101](https://github.com/equinor/earplug-test/issues/101)
+
 ## [1.1.0](https://github.com/equinor/earplug-test/compare/v1.0.0...v1.1.0) (2024-10-11)
 
 
